@@ -12,7 +12,7 @@
 		
 	},
 	"ts-node": {
-		"compiler, "helper.js"Options": {
+		"compilerOptions": {
 		"module": "commonjs"
 		}}
 

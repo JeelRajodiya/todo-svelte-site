@@ -8,7 +8,7 @@
     
     <h1 class="my-10">
         To Do app made with 
-        <svelte:component this={SvelteIcon} />
+        <svelte:component  data-tip="svelte" this={SvelteIcon} />
     </h1>
 <div class="card bg-neutral w-full m-5 p-10 max-w-xl">
     <h2 class="card-title justify-center p-5">

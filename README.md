@@ -16,8 +16,8 @@
 
 - api will replicate the google task’s api structure
 - Two parts
-    - tasks
-    - tasklists
+  - tasks
+  - tasklists
 
 ### TaskList Object
 
@@ -35,7 +35,7 @@
 
 ### T**askLists.list**
 
-**`GET /api/tasklists/`** 
+**`GET /api/tasklists/`**
 
 Query parametera
 
@@ -46,9 +46,9 @@ pageToken: string //Token specifying the result page to return. Optional.
 }
 ```
 
-Request Body:  **Empty**
+Request Body: **Empty**
 
-Response body: 
+Response body:
 
 ```jsx
 {
@@ -61,7 +61,7 @@ TaskLists Object
 ```jsx
 {
   "kind": string, //Type of the resource. This is always "tasks#taskLists".
-  "etag": string, 
+  "etag": string,
   "nextPageToken": string, //Token that can be used to request the next page of this result.
   "items": []TaskList // Collection of TaskList Object.
 }
@@ -79,9 +79,9 @@ Path Parameters
 }
 ```
 
-Request Body:  **Empty**
+Request Body: **Empty**
 
-Response body: 
+Response body:
 
 ```jsx
 {
@@ -101,9 +101,9 @@ Path Parameters
 }
 ```
 
-Request Body:  **Empty**
+Request Body: **Empty**
 
-Response body:  Successful Response will be  **Empty**
+Response body: Successful Response will be **Empty**
 
 ### TaskLists.insert
 

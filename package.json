@@ -16,6 +16,7 @@
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
 		"@types/jsonwebtoken": "^8.5.8",
+		"@types/nodemailer": "^6.4.5",
 		"@typescript-eslint/eslint-plugin": "^5.27.0",
 		"@typescript-eslint/parser": "^5.27.0",
 		"autoprefixer": "^10.4.8",
@@ -37,6 +38,8 @@
 	"dependencies": {
 		"@tailwindcss/typography": "^0.5.4",
 		"@types/cookie": "^0.5.1",
+		"@types/md5": "^2.3.2",
+		"axios": "^0.27.2",
 		"cookie": "^0.5.0",
 		"daisyui": "^2.20.0",
 		"etag": "^1.8.1",

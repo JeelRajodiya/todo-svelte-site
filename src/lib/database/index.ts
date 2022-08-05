@@ -8,7 +8,7 @@ export default class DB {
     private DB : Db
     constructor (){
         this.client = new MongoClient(MONGODB_URI);
-        this.DB = this.client.db("MyDBs");
+        this.DB = this.client.db("svelte-todo");
     }
 
      getData(collection: string, query: any) {

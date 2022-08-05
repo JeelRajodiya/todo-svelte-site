@@ -36,7 +36,7 @@ export async function POST(event: RequestEvent) {
     const passwordHash = genPasswordHash(password)
     const db = new DB();
     const mailSentTo = await sendOTP(otp,email)
-    console.log(otpToken) 
+    console.log("Set",otpToken) 
     
 
     db.insertData('otps', {
@@ -48,10 +48,14 @@ export async function POST(event: RequestEvent) {
     });
     
 	return {
+        statusCode: 200,
         headers:{
-          "set-cookie":[cookie.serialize("otp_token",otpToken)]
+          "set-cookie":cookie.serialize('otp_token',otpToken),
+          "Access-Control-Allow-Credentials":true,
+            "Access-Control-Allow-Origin":"*",
+           "Access-Control-Expose-Headers": "set-cookie",
+           
         },
-		statusCode: 200,
         body:{
             "clientMail":mailSentTo    // this will be show to the client so he can confirm that the sent email is his
         }
@@ -60,8 +64,9 @@ export async function POST(event: RequestEvent) {
 
 export function PUT(req: RequestEvent) {
     const otpToken = cookie.parse(req.request.headers.get('cookie') as string).otp_token
-    
-
+    console.log("Get",otpToken)
+    return {
+        status:200
+    }
 }
-
 

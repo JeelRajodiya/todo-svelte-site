@@ -3,18 +3,19 @@
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "vite dev",
+		"helper": "node helper.js",
+		"format": "prettier --write --plugin-search-dir=. .",
 		"build": "vite build",
 		"package": "svelte-kit package",
 		"preview": "vite preview",
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
-		"lint": "prettier --check --plugin-search-dir=. . && eslint .",
-		"format": "prettier --write --plugin-search-dir=. .",
-		"helper": "tsc helper.ts && node helper.js"
+		"lint": "prettier --check --plugin-search-dir=. . && eslint ."
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
+		"@types/jsonwebtoken": "^8.5.8",
 		"@typescript-eslint/eslint-plugin": "^5.27.0",
 		"@typescript-eslint/parser": "^5.27.0",
 		"autoprefixer": "^10.4.8",
@@ -35,12 +36,22 @@
 	"type": "module",
 	"dependencies": {
 		"@tailwindcss/typography": "^0.5.4",
+		"@types/cookie": "^0.5.1",
+		"cookie": "^0.5.0",
 		"daisyui": "^2.20.0",
 		"etag": "^1.8.1",
 		"firebase": "^9.9.1",
+		"html-table-to-json": "^1.0.0",
 		"jose": "^4.8.3",
+		"jsdom": "^20.0.0",
+		"jsonwebtoken": "^8.5.1",
+		"md5": "^2.3.0",
+		"mongodb": "4.8",
 		"nodemailer": "^6.7.7",
+		"prompt-sync": "^4.2.0",
 		"smtp-server": "^3.11.0",
-		"ts-node": "^10.9.1"
+		"ts-node": "^10.9.1",
+		"xhr": "^2.6.0",
+		"xmlhttprequest": "^1.8.0"
 	}
 }

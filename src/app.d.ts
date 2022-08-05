@@ -9,3 +9,11 @@ declare namespace App {
 	// interface Session {}
 	// interface Stuff {}
 }
+declare function etag(s:string):string
+
+declare module 'etag'  {
+	
+	export = etag;
+	
+	
+}

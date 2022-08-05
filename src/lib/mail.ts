@@ -2,7 +2,7 @@ import nodemailer from "nodemailer";
 import {SMTP_HOST, SMTP_USER, SMTP_PASS} from "$env/static/private";
 // async..await is not allowed in global scope, must use a wrapper
 
-export default async function SendOTP(OTP:number, email:string) {
+export default async function SendOTP(OTP:number, email:string) :Promise< string  > {
 
 
   // create reusable transporter object using the default SMTP transport
@@ -26,7 +26,8 @@ export default async function SendOTP(OTP:number, email:string) {
     html: `Your svelte-todo app OTP is <h1>${OTP} </h1> `, // html body
     
   });
-  return info.accepted
+  const mailSentTo =  info.accepted[0] as string
+  return  mailSentTo
   
 
 }

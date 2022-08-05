@@ -35,16 +35,17 @@ export async function POST(event: RequestEvent) {
     const otp = Math.floor(100000 + Math.random() * 900000);
     const passwordHash = genPasswordHash(password)
     const db = new DB();
-    const mailSentTo = await sendOTP(otp,email)[0]
+    const mailSentTo = await sendOTP(otp,email)
+    console.log(otpToken) 
     
 
-    // db.insertData('otps', {
-    //     email,
-    //     password_hash:passwordHash,
-    //     otp_otken:otpToken,
-    //     otp
+    db.insertData('otps', {
+        email,
+        password_hash:passwordHash,
+        otp_token:otpToken,
+        otp
     
-    // });
+    });
     
 	return {
         headers:{
@@ -55,6 +56,12 @@ export async function POST(event: RequestEvent) {
             "clientMail":mailSentTo    // this will be show to the client so he can confirm that the sent email is his
         }
 	};
+}
+
+export function PUT(req: RequestEvent) {
+    const otpToken = cookie.parse(req.request.headers.get('cookie') as string).otp_token
+    
+
 }
 
 

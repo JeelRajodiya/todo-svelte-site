@@ -19,4 +19,12 @@ export default class DB {
         return this.DB.collection(collection).insertOne(data);
     }
 
+    getExactData(collection: string, field:string,value:any) {
+        return this.DB.collection(collection).find({[field]:value}).toArray();
+    }
+
+    deleteDoc(collection: string, query: any) {
+        return this.DB.collection(collection).deleteOne(query);
+    }
+
 }

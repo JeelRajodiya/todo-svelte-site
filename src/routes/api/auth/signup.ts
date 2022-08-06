@@ -45,26 +45,57 @@ function genOTP():number{
     return OTP
 }
 
+interface OTPDoc{
+    email:string,
+    password_hash:string,
+    created_at:number,
+    otp:number,
+    otp_token:string,
+}
+
+async function checkForDuplicateEmail(email:string):Promise<boolean>{
+    const db = new DB()
+    const activeAccount = await db.getExactData('users', 'email', email)
+    if (activeAccount.length > 0) {
+        return true
+    } else {
+        return false
+    }
+
+    
+}
 export async function POST(event: RequestEvent) {
 	const req: SignupRequest = await event.request.json();
 	const { email, password } = req;
+    const isDuplicate = await checkForDuplicateEmail(email)
+    if (isDuplicate) {
+        return {
+            status: 400,
+            body: {
+                message: 'Email already exists',
+            }}
+        }
+
+
     const otp = genOTP();
     const passwordHash = genPasswordHash(password)
     const otpToken = genOTPToken(req);
     const db = new DB();
     const mailSentTo = await sendOTP(otp,email)
-
-
-    
-
-    db.insertData('otps', {
+    const otpDoc:OTPDoc = {
         email,
         password_hash:passwordHash,
         otp_token:otpToken,
         otp,
+        created_at:Date.now()
         
     
-    });
+    }
+
+
+    
+
+    db.insertData('otps',otpDoc );
     
 	return {
         statusCode: 200,

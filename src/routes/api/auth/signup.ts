@@ -7,63 +7,14 @@ import md5 from 'md5'
 import {v4 as uuidv4} from 'uuid'
 import sendOTP from '$lib/mail'
 import {DateTime} from 'luxon'
+import {genOTP, genSession, genOTPToken,checkForDuplicateEmail} from '$lib/functions/signup'
+
+import type { SignupRequest,DecodedJWT,OTPData,OTPDoc,OtpAuthRequest } from '$lib/functions/signup';
 
 
 
-interface SignupRequest {
-	email: string;
-	password: string;
-}
-function genOTPToken(req:SignupRequest): string {
-    const token = jwt.sign({
-        email: req.email,
-        passwordHash: md5(req.password),
-    }, JWT_SECRET, {
-        expiresIn: 5 * 60,
-    });
-    return token;
-}
 
-function genSession(email:string,passwordHash:string):string{
-    const session = jwt.sign({
-        email: email,
-        passwordHash:passwordHash,
-    }, JWT_SECRET, {
-        expiresIn: "30d",
-    }
-     )
-    return session
-}
 
-function genPasswordHash(password:string):string{
-    const hash = md5(password)
-    return hash
-}
-
-function genOTP():number{
-    const OTP = Math.floor(100000 + Math.random() * 900000)
-    return OTP
-}
-
-interface OTPDoc{
-    email:string,
-    password_hash:string,
-    created_at:number,
-    otp:number,
-    otp_token:string,
-}
-
-async function checkForDuplicateEmail(email:string):Promise<boolean>{
-    const db = new DB()
-    const activeAccount = await db.getExactData('users', 'email', email)
-    if (activeAccount.length > 0) {
-        return true
-    } else {
-        return false
-    }
-
-    
-}
 export async function POST(event: RequestEvent) {
 	const req: SignupRequest = await event.request.json();
 	const { email, password } = req;
@@ -78,7 +29,7 @@ export async function POST(event: RequestEvent) {
 
 
     const otp = genOTP();
-    const passwordHash = genPasswordHash(password)
+    const passwordHash = md5(password)
     const otpToken = genOTPToken(req);
     const db = new DB();
     const mailSentTo = await sendOTP(otp,email)
@@ -91,9 +42,7 @@ export async function POST(event: RequestEvent) {
         
     
     }
-
-
-    
+   
 
     db.insertData('otps',otpDoc );
     
@@ -111,23 +60,7 @@ export async function POST(event: RequestEvent) {
         }
 	};
 }
-interface OtpAuthRequest {
-    otp:number;
-}
 
-interface DecodedJWT{
-    email:string;
-    passwordHash:string;
-    
-}
-interface OTPData{
-    email:string;
-    password_hash:string;
-    otp_token:string;
-    otp:number;
-    
-
-}
 
 export async function PUT(event: RequestEvent) {
     const otpToken:string = event.request.headers.get('Authorization') as string

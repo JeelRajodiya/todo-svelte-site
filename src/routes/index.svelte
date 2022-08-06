@@ -44,6 +44,6 @@
 		height: 100%;
 	}
 	h1 {
-		font-size: 2rem;
+		font-size: 1.9rem;
 	}
 </style>

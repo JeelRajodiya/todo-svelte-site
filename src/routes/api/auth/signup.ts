@@ -7,15 +7,16 @@ import md5 from 'md5';
 import { v4 as uuidv4 } from 'uuid';
 import sendOTP from '$lib/mail';
 import { DateTime } from 'luxon';
-import { genOTP, genSession, genOTPToken, checkForDuplicateEmail } from '$lib/functions/signup';
+import { genOTP, genSession, genOTPToken, checkForDuplicateEmail } from '$lib/functions';
 
 import type {
+	UserDoc,
 	SignupRequest,
 	DecodedJWT,
 	OTPData,
 	OTPDoc,
 	OtpAuthRequest
-} from '$lib/functions/signup';
+} from '$lib/functions';
 
 export async function POST(event: RequestEvent) {
 	const req: SignupRequest = await event.request.json();
@@ -46,10 +47,10 @@ export async function POST(event: RequestEvent) {
 	const mailSentTo = await sendOTP(otp, email);
 	const otpDoc: OTPDoc = {
 		email,
-		password_hash: passwordHash,
-		otp_token: otpToken,
+		passwordHash: passwordHash,
+		otpToken: otpToken,
 		otp,
-		created_at: new Date()
+		createdAt: new Date()
 	};
 
 	db.insertData('otps', otpDoc);
@@ -100,17 +101,17 @@ export async function PUT(event: RequestEvent) {
 		};
 	}
 
-	const otps = await db.getExactData('otps', 'otp_token', otpToken);
-	const otpData: OTPData = otps[0];
+	const otps = await db.getExactData('otps', 'otpToken', otpToken);
+	const otpData: OTPData = otps;
 
 	let isVerified = false;
 
 	// console.log(enteredOtp,otpData,decodedData)
 	if (
 		otpData.otp == enteredOtp &&
-		otpData.otp_token == otpToken &&
+		otpData.otpToken == otpToken &&
 		otpData.email == decodedData.email &&
-		otpData.password_hash == decodedData.passwordHash
+		otpData.passwordHash == decodedData.passwordHash
 	) {
 		isVerified = true;
 	}
@@ -123,15 +124,15 @@ export async function PUT(event: RequestEvent) {
 		};
 	}
 
-	const session = genSession(otpData.email, otpData.password_hash);
-	const userDoc = {
+	const session = genSession(otpData.email, otpData.passwordHash);
+	const userDoc: UserDoc = {
 		email: otpData.email,
-		password_hash: otpData.password_hash,
+		passwordHash: otpData.passwordHash,
 		sessions: [session],
 		id: uuidv4(),
-		created_at: DateTime.local().toISO()
+		createdAt: new Date()
 	};
-	db.deleteDoc('otps', { otp_token: otpToken });
+	db.deleteDoc('otps', { otpToken: otpToken });
 	db.insertData('users', userDoc);
 
 	return {

@@ -7,23 +7,29 @@ import { JWT_SECRET } from '$env/static/private';
 export interface OtpAuthRequest {
 	otp: number;
 }
-
+export interface UserDoc {
+	email: string;
+	passwordHash: string;
+	createdAt: Date;
+	id: string;
+	sessions: string[];
+}
 export interface DecodedJWT {
 	email: string;
 	passwordHash: string;
 }
 export interface OTPData {
 	email: string;
-	password_hash: string;
-	otp_token: string;
+	passwordHash: string;
+	otpToken: string;
 	otp: number;
 }
 export interface OTPDoc {
 	email: string;
-	password_hash: string;
-	created_at: Date;
+	passwordHash: string;
+	createdAt: Date;
 	otp: number;
-	otp_token: string;
+	otpToken: string;
 }
 
 export interface SignupRequest {

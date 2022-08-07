@@ -21,7 +21,7 @@ export interface OTPData {
 export interface OTPDoc {
 	email: string;
 	password_hash: string;
-	created_at: number;
+	created_at: Date;
 	otp: number;
 	otp_token: string;
 }

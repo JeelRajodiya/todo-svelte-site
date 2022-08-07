@@ -49,7 +49,7 @@ export async function POST(event: RequestEvent) {
 		password_hash: passwordHash,
 		otp_token: otpToken,
 		otp,
-		created_at: Date.now()
+		created_at: new Date()
 	};
 
 	db.insertData('otps', otpDoc);

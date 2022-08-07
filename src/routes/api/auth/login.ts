@@ -1,7 +1,8 @@
 import type { RequestEvent } from '@sveltejs/kit';
 import md5 from 'md5';
-import DB from '$lib/database';
+import MongoDB from '$lib/database';
 import type { UserDoc } from '$lib/functions';
+import { genSession } from '$lib/functions';
 
 export async function POST(event: RequestEvent) {
 	const req = await event.request.json();
@@ -15,7 +16,7 @@ export async function POST(event: RequestEvent) {
 		};
 	}
 	const passwordHash = md5(password);
-	const db = new DB();
+	const db = new MongoDB();
 	const userData: UserDoc | null = await db.getExactData('users', 'email', email);
 
 	if (userData == null) {
@@ -33,4 +34,18 @@ export async function POST(event: RequestEvent) {
 			}
 		};
 	}
+	const session = genSession(email, passwordHash);
+	db.users.updateOne(
+		{ email: email, passwordHash: passwordHash },
+		{ $push: { sessions: session } }
+	);
+	return {
+		status: 200,
+		headers: {
+			authorization: session
+		},
+		body: {
+			message: 'Login successful'
+		}
+	};
 }

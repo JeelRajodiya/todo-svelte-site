@@ -2,11 +2,11 @@ import type { RequestEvent } from '@sveltejs/kit';
 import { JWT_SECRET } from '$env/static/private';
 // import etag from 'etag';
 import jwt from 'jsonwebtoken';
-import DB from '$lib/database';
+import MongoDB from '$lib/database';
 import md5 from 'md5';
 import { v4 as uuidv4 } from 'uuid';
 import sendOTP from '$lib/mail';
-import { DateTime } from 'luxon';
+// import { DateTime } from 'luxon';
 import { genOTP, genSession, genOTPToken, checkForDuplicateEmail } from '$lib/functions';
 
 import type {
@@ -43,7 +43,7 @@ export async function POST(event: RequestEvent) {
 	const otp = genOTP();
 	const passwordHash = md5(password);
 	const otpToken = genOTPToken(req);
-	const db = new DB();
+	const db = new MongoDB();
 	const mailSentTo = await sendOTP(otp, email);
 	const otpDoc: OTPDoc = {
 		email,
@@ -80,7 +80,7 @@ export async function PUT(event: RequestEvent) {
 	}
 	const body: OtpAuthRequest = await event.request.json();
 	const enteredOtp = body.otp;
-	const db = new DB();
+	const db = new MongoDB();
 
 	const decodedData: DecodedJWT = jwt.verify(otpToken, JWT_SECRET, function (err, decoded) {
 		if (err) {

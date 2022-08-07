@@ -72,7 +72,7 @@ export function genOTP(): number {
 
 export async function checkForDuplicateEmail(email: string): Promise<boolean> {
 	const db = new DB();
-	const activeAccount = await db.getExactData('users', 'email', email);
+	const activeAccount = await db.getData('users', { email: { $eq: email } });
 	if (activeAccount.length > 0) {
 		return true;
 	} else {

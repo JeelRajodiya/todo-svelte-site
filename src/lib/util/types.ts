@@ -32,7 +32,7 @@ export interface SignupRequest {
 }
 
 export interface TaskListDoc {
-	kind: string;
+	kind: string; //Type of the resource. This is always "tasks#taskList".
 	userID: string;
 	id: string;
 	etag: string;
@@ -44,7 +44,7 @@ export interface TaskListDoc {
 export interface TaskLists {
 	kind: string; //Type of the resource. This is always "tasks#taskLists".
 	etag: string;
-	nextPageToken: string; //Token that can be used to request the next page of this result.
+	nextPageToken?: string; //Token that can be used to request the next page of this result.
 	items: TaskListDoc[]; // Collection of TaskList Object.
 }
 

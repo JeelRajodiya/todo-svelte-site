@@ -7,7 +7,7 @@ import md5 from 'md5';
 import { v4 as uuidv4 } from 'uuid';
 import sendOTP from '$lib/mail';
 // import { DateTime } from 'luxon';
-import { genOTP, genSession, genOTPToken, checkForDuplicateEmail } from '$lib/functions';
+import { genOTP, genSession, genOTPToken, checkForDuplicateEmail } from '$lib/util/functions';
 
 import type {
 	UserDoc,
@@ -16,7 +16,7 @@ import type {
 	OTPData,
 	OTPDoc,
 	OtpAuthRequest
-} from '$lib/functions';
+} from '$lib/util/types';
 
 export async function POST(event: RequestEvent) {
 	const req: SignupRequest = await event.request.json();
@@ -53,7 +53,7 @@ export async function POST(event: RequestEvent) {
 		createdAt: new Date()
 	};
 
-	db.insertData('otps', otpDoc);
+	db.otps.insertOne(otpDoc);
 
 	return {
 		statusCode: 200,
@@ -102,8 +102,7 @@ export async function PUT(event: RequestEvent) {
 		};
 	}
 
-	const otps = await db.getExactData('otps', 'otpToken', otpToken);
-	const otpData: OTPData = otps;
+	const otpData: OTPData = (await db.otps.findOne({ otpToken: otpToken })) as OTPData;
 
 	let isVerified = false;
 
@@ -133,8 +132,8 @@ export async function PUT(event: RequestEvent) {
 		id: uuidv4(),
 		createdAt: new Date()
 	};
-	db.deleteDoc('otps', { otpToken: otpToken });
-	db.insertData('users', userDoc);
+	db.otps.deleteOne({ otpToken: otpToken });
+	db.users.insertOne(userDoc);
 
 	return {
 		status: 200,
@@ -161,8 +160,7 @@ export async function PATCH(event: RequestEvent) {
 		};
 	}
 	const db = new MongoDB();
-	const otps = await db.getExactData('otps', 'otpToken', otpToken);
-	const otpData: OTPData = otps;
+	const otpData: OTPData = (await db.otps.findOne({ otpToken: otpToken })) as OTPData;
 
 	const mailSentTo = await sendOTP(otpData.otp, otpData.email);
 
@@ -194,8 +192,8 @@ export async function DELETE(event: RequestEvent) {
 		};
 	}
 	const db = new MongoDB();
-	const users = await db.getExactData('users', 'sessions', session);
-	const userData: UserData = users;
+	const userData: UserDoc = (await db.users.findOne({ sessions: session })) as UserDoc;
+
 	if (userData.passwordHash !== md5(body.password)) {
 		return {
 			status: 401,
@@ -204,7 +202,8 @@ export async function DELETE(event: RequestEvent) {
 			}
 		};
 	}
-	db.deleteDoc('users', { sessions: session });
+	db.users.deleteOne({ sessions: session });
+
 	// work in progress to delete all tasks and tasklists
 	return {
 		status: 200,

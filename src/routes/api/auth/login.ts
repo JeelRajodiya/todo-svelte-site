@@ -1,8 +1,8 @@
 import type { RequestEvent } from '@sveltejs/kit';
 import md5 from 'md5';
 import MongoDB from '$lib/database';
-import type { UserDoc } from '$lib/functions';
-import { genSession } from '$lib/functions';
+import type { UserDoc } from '$lib/util/types';
+import { genSession } from '$lib/util/functions';
 
 export async function POST(event: RequestEvent) {
 	const req = await event.request.json();
@@ -17,7 +17,7 @@ export async function POST(event: RequestEvent) {
 	}
 	const passwordHash = md5(password);
 	const db = new MongoDB();
-	const userData: UserDoc | null = await db.getExactData('users', 'email', email);
+	const userData: UserDoc = (await db.users.findOne({ email, passwordHash })) as UserDoc;
 
 	if (userData == null) {
 		return {

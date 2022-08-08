@@ -3,39 +3,7 @@ import DB from '$lib/database';
 import md5 from 'md5';
 
 import { JWT_SECRET } from '$env/static/private';
-
-export interface OtpAuthRequest {
-	otp: number;
-}
-export interface UserDoc {
-	email: string;
-	passwordHash: string;
-	createdAt: Date;
-	id: string;
-	sessions: string[];
-}
-export interface DecodedJWT {
-	email: string;
-	passwordHash: string;
-}
-export interface OTPData {
-	email: string;
-	passwordHash: string;
-	otpToken: string;
-	otp: number;
-}
-export interface OTPDoc {
-	email: string;
-	passwordHash: string;
-	createdAt: Date;
-	otp: number;
-	otpToken: string;
-}
-
-export interface SignupRequest {
-	email: string;
-	password: string;
-}
+import type { SignupRequest } from '$lib/util/types';
 
 export function genOTPToken(req: SignupRequest): string {
 	const token = jwt.sign(
@@ -72,8 +40,8 @@ export function genOTP(): number {
 
 export async function checkForDuplicateEmail(email: string): Promise<boolean> {
 	const db = new DB();
-	const activeAccount = await db.getData('users', { email: { $eq: email } });
-	if (activeAccount.length > 0) {
+	const activeAccount = await db.users.count({ email: { $eq: email } });
+	if (activeAccount > 0) {
 		return true;
 	} else {
 		return false;

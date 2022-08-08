@@ -49,3 +49,16 @@ export async function POST(event: RequestEvent) {
 		}
 	};
 }
+
+export async function DELETE(event: RequestEvent) {
+	// logout
+	const session: string = event.request.headers.get('Authorization') as string;
+	const db = new MongoDB();
+	db.users.updateOne({ sessions: session }, { $pull: { sessions: session } });
+	return {
+		status: 200,
+		body: {
+			message: 'Logout successful'
+		}
+	};
+}

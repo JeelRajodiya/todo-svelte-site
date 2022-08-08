@@ -7,7 +7,13 @@ import md5 from 'md5';
 import { v4 as uuidv4 } from 'uuid';
 import sendOTP from '$lib/mail';
 // import { DateTime } from 'luxon';
-import { genOTP, genSession, genOTPToken, checkForDuplicateEmail } from '$lib/functions';
+import {
+	genOTP,
+	genSession,
+	genOTPToken,
+	checkForDuplicateEmail,
+	sendOTPViaToken
+} from '$lib/functions';
 
 import type {
 	UserDoc,
@@ -69,6 +75,7 @@ export async function POST(event: RequestEvent) {
 }
 
 export async function PUT(event: RequestEvent) {
+	// validate OTP
 	const otpToken: string = event.request.headers.get('Authorization') as string;
 	if (otpToken == undefined) {
 		return {
@@ -144,6 +151,26 @@ export async function PUT(event: RequestEvent) {
 		},
 		body: {
 			message: 'OTP Verified'
+		}
+	};
+}
+
+export async function PATCH(event: RequestEvent) {
+	// resend otp
+	const otpToken: string = event.request.headers.get('Authorization') as string;
+	if (otpToken == undefined) {
+		return {
+			status: 400,
+			body: {
+				message: 'Otp token is not provided in authorization header'
+			}
+		};
+	}
+	const mailSentTo = await sendOTPViaToken(otpToken);
+	return {
+		status: 200,
+		body: {
+			clientMail: mailSentTo // this will be show to the client so he can confirm that the sent email is his
 		}
 	};
 }

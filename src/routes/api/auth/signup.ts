@@ -173,3 +173,43 @@ export async function PATCH(event: RequestEvent) {
 		}
 	};
 }
+
+export async function DELETE(event: RequestEvent) {
+	// delete account
+	const session: string = event.request.headers.get('Authorization') as string;
+	const body = await event.request.json();
+	if (body.password === undefined) {
+		return {
+			status: 400,
+			body: {
+				message: 'password is not provided in body as json'
+			}
+		};
+	} else if (session === undefined) {
+		return {
+			status: 400,
+			body: {
+				message: 'session is not provided in authorization header'
+			}
+		};
+	}
+	const db = new MongoDB();
+	const users = await db.getExactData('users', 'sessions', session);
+	const userData: UserData = users;
+	if (userData.passwordHash !== md5(body.password)) {
+		return {
+			status: 401,
+			body: {
+				message: 'Invalid Password'
+			}
+		};
+	}
+	db.deleteDoc('users', { sessions: session });
+	// work in progress to delete all tasks and tasklists
+	return {
+		status: 200,
+		body: {
+			message: 'Account Deleted'
+		}
+	};
+}

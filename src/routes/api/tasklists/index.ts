@@ -4,8 +4,12 @@ import type { RequestEvent } from '@sveltejs/kit';
 import etag from 'etag';
 
 export async function GET(event: RequestEvent) {
+	const maxResults = Number(event.url.searchParams.get('maxResults'));
+	const nextPageToken = Number(event.url.searchParams.get('nextPageToken'));
+	console.log(maxResults, nextPageToken);
+
 	const session = (await event.request.headers.get('Authorization')) as string;
-	const body = await event.request.json();
+
 	if (session === undefined) {
 		return {
 			status: 400,
@@ -26,24 +30,26 @@ export async function GET(event: RequestEvent) {
 	}
 
 	const userID = userData.id;
-	const { maxResults, nextPageToken } = body;
+
 	let tasklists;
 
 	// { maxResults:number ,
 	//     nextPageToken: number}
-	if (nextPageToken === undefined || nextPageToken === undefined) {
+	if (nextPageToken === 0 && maxResults === 0) {
 		tasklists = await db.tasklists.find({ userID }).toArray();
 	} else {
 		tasklists = await db.tasklists
 			.find({ userID })
+			.limit(maxResults)
 			.skip(nextPageToken * maxResults)
 			.toArray();
+		console.log('HO');
 	}
 	const tasklistsResponse: TaskListsResponse = {
 		kind: 'tasklists#tasklists',
 		items: tasklists,
 		etag: etag(JSON.stringify(tasklists)),
-		nextPageToken: tasklists.length === maxResults ? nextPageToken + 1 : undefined
+		nextPageToken: nextPageToken + 1
 	};
 
 	return {

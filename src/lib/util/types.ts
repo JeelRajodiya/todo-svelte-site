@@ -44,7 +44,7 @@ export interface TaskListDoc {
 export interface TaskLists {
 	kind: string; //Type of the resource. This is always "tasks#taskLists".
 	etag: string;
-	nextPageToken?: string; //Token that can be used to request the next page of this result.
+	nextPageToken?: number; //Token that can be used to request the next page of this result.
 	items: TaskListDoc[]; // Collection of TaskList Object.
 }
 
@@ -77,6 +77,6 @@ export interface TaskDoc {
 export interface Tasks {
 	kind: string; // Type of the resource. This is always "tasks#tasks".
 	etag: string; // ETag of the resource.
-	nextPageToken: string; // Token used to access the next page of this result.
+	nextPageToken: number; // Token used to access the next page of this result.
 	items: TaskDoc[]; // object | Collection of tasks.
 }

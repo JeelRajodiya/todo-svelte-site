@@ -160,8 +160,15 @@ export async function PATCH(event: RequestEvent) {
 		};
 	}
 	const db = new MongoDB();
-	const otpData: OTPData = (await db.otps.findOne({ otpToken: otpToken })) as OTPData;
-
+	const otpData: OTPData | null = (await db.otps.findOne({ otpToken: otpToken })) as OTPData | null;
+	if (otpData === null) {
+		return {
+			status: 403,
+			body: {
+				message: 'Given OTP Token is Invalid'
+			}
+		};
+	}
 	const mailSentTo = await sendOTP(otpData.otp, otpData.email);
 
 	return {
@@ -174,9 +181,12 @@ export async function PATCH(event: RequestEvent) {
 
 export async function DELETE(event: RequestEvent) {
 	// delete account
-	const session: string = event.request.headers.get('Authorization') as string;
 	const body = await event.request.json();
-	if (body.password === undefined) {
+	const { password } = body;
+
+	const session: string = event.request.headers.get('Authorization') as string;
+
+	if (password === undefined) {
 		return {
 			status: 400,
 			body: {
@@ -193,8 +203,16 @@ export async function DELETE(event: RequestEvent) {
 	}
 	const db = new MongoDB();
 	const userData: UserDoc = (await db.users.findOne({ sessions: session })) as UserDoc;
+	if (userData === null) {
+		return {
+			status: 400,
+			body: {
+				message: 'Invalid session'
+			}
+		};
+	}
 
-	if (userData.passwordHash !== md5(body.password)) {
+	if (userData.passwordHash !== md5(password)) {
 		return {
 			status: 401,
 			body: {

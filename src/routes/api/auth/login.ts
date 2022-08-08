@@ -17,7 +17,7 @@ export async function POST(event: RequestEvent) {
 	}
 	const passwordHash = md5(password);
 	const db = new MongoDB();
-	const userData: UserDoc = (await db.users.findOne({ email, passwordHash })) as UserDoc;
+	const userData: UserDoc = (await db.users.findOne({ email })) as UserDoc;
 
 	if (userData == null) {
 		return {

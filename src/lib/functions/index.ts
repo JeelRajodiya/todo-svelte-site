@@ -3,8 +3,6 @@ import DB from '$lib/database';
 import md5 from 'md5';
 
 import { JWT_SECRET } from '$env/static/private';
-import MongoDB from '$lib/database';
-import sendOTP from '$lib/mail';
 
 export interface OtpAuthRequest {
 	otp: number;
@@ -80,13 +78,4 @@ export async function checkForDuplicateEmail(email: string): Promise<boolean> {
 	} else {
 		return false;
 	}
-}
-
-export async function sendOTPViaToken(token: string) {
-	const db = new MongoDB();
-	const otps = await db.getExactData('otps', 'otpToken', token);
-	const otpData: OTPData = otps;
-
-	const mailSentTo = await sendOTP(otpData.otp, otpData.email);
-	return mailSentTo;
 }

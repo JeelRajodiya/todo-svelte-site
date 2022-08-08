@@ -7,13 +7,7 @@ import md5 from 'md5';
 import { v4 as uuidv4 } from 'uuid';
 import sendOTP from '$lib/mail';
 // import { DateTime } from 'luxon';
-import {
-	genOTP,
-	genSession,
-	genOTPToken,
-	checkForDuplicateEmail,
-	sendOTPViaToken
-} from '$lib/functions';
+import { genOTP, genSession, genOTPToken, checkForDuplicateEmail } from '$lib/functions';
 
 import type {
 	UserDoc,
@@ -166,7 +160,12 @@ export async function PATCH(event: RequestEvent) {
 			}
 		};
 	}
-	const mailSentTo = await sendOTPViaToken(otpToken);
+	const db = new MongoDB();
+	const otps = await db.getExactData('otps', 'otpToken', otpToken);
+	const otpData: OTPData = otps;
+
+	const mailSentTo = await sendOTP(otpData.otp, otpData.email);
+
 	return {
 		status: 200,
 		body: {

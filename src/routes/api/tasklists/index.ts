@@ -1,5 +1,10 @@
 import MongoDB from '$lib/database';
-import type { TaskDoc, TaskLists as TaskListsResponse, UserDoc } from '$lib/util/types';
+import type {
+	TaskDoc,
+	TaskListDoc,
+	TaskLists as TaskListsResponse,
+	UserDoc
+} from '$lib/util/types';
 import type { RequestEvent } from '@sveltejs/kit';
 import etag from 'etag';
 
@@ -30,7 +35,7 @@ export async function GET(event: RequestEvent) {
 
 	const userID = userData.id;
 
-	let tasklists: TaskDoc[];
+	let tasklists: TaskListDoc[];
 
 	// { maxResults:number ,
 	//     nextPageToken: number}

@@ -1,5 +1,5 @@
 import MongoDB from '$lib/database';
-import type { TaskLists as TaskListsResponse, UserDoc } from '$lib/util/types';
+import type { TaskDoc, TaskLists as TaskListsResponse, UserDoc } from '$lib/util/types';
 import type { RequestEvent } from '@sveltejs/kit';
 import etag from 'etag';
 
@@ -18,10 +18,7 @@ export async function GET(event: RequestEvent) {
 		};
 	}
 	const db = MongoDB;
-	console.time('getTaskLists');
 	const userData: UserDoc = (await db.users.findOne({ sessions: { $eq: session } })) as UserDoc;
-	console.timeEnd('getTaskLists');
-	console.time('rest');
 	if (userData === null) {
 		return {
 			status: 400,
@@ -33,7 +30,7 @@ export async function GET(event: RequestEvent) {
 
 	const userID = userData.id;
 
-	let tasklists;
+	let tasklists: TaskDoc[];
 
 	// { maxResults:number ,
 	//     nextPageToken: number}
@@ -46,13 +43,20 @@ export async function GET(event: RequestEvent) {
 			.skip(nextPageToken * maxResults)
 			.toArray();
 	}
+	let taskID;
+
+	for (let i = 0; i < tasklists.length; i++) {
+		taskID = tasklists[i].id;
+		tasklists[i]['selfLink'] = event.url.origin + '/api/tasklists/' + taskID;
+	}
+
 	const tasklistsResponse: TaskListsResponse = {
 		kind: 'tasklists#tasklists',
 		items: tasklists,
 		etag: etag(JSON.stringify(tasklists)),
 		nextPageToken: nextPageToken + 1
 	};
-	console.timeEnd('rest');
+
 	return {
 		status: 200,
 		body: tasklistsResponse

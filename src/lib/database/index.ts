@@ -4,7 +4,7 @@ import type { OTPDoc, UserDoc, TaskDoc, TaskListDoc } from '$lib/util/types';
 // methods
 //  query from collection
 
-export default class MongoDB {
+class MongoDB {
 	private client: MongoClient;
 	private DB: Db;
 	public users: Collection<UserDoc>;
@@ -21,3 +21,5 @@ export default class MongoDB {
 		this.otps = this.DB.collection('otps');
 	}
 }
+const mongoDB = new MongoDB();
+export default mongoDB;

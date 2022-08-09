@@ -17,7 +17,7 @@ export async function GET(event: RequestEvent) {
 			}
 		};
 	}
-	const db = new MongoDB();
+	const db = MongoDB;
 	console.time('getTaskLists');
 	const userData: UserDoc = (await db.users.findOne({ sessions: { $eq: session } })) as UserDoc;
 	console.timeEnd('getTaskLists');

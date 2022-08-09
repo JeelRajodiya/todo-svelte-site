@@ -224,7 +224,6 @@ export async function DELETE(event: RequestEvent) {
 	db.tasklists.deleteMany({ userID: userData.id });
 	db.tasks.deleteMany({ userID: userData.id });
 
-	// work in progress to delete all tasks and tasklists
 	return {
 		status: 200,
 		body: {

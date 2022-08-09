@@ -43,7 +43,7 @@ export async function POST(event: RequestEvent) {
 	const otp = genOTP();
 	const passwordHash = md5(password);
 	const otpToken = genOTPToken(req);
-	const db = new MongoDB();
+	const db = MongoDB;
 	const mailSentTo = await sendOTP(otp, email);
 	const otpDoc: OTPDoc = {
 		email,
@@ -81,7 +81,7 @@ export async function PUT(event: RequestEvent) {
 	}
 	const body: OtpAuthRequest = await event.request.json();
 	const enteredOtp = body.otp;
-	const db = new MongoDB();
+	const db = MongoDB;
 
 	const decodedData: DecodedJWT = jwt.verify(otpToken, JWT_SECRET, function (err, decoded) {
 		if (err) {
@@ -159,7 +159,7 @@ export async function PATCH(event: RequestEvent) {
 			}
 		};
 	}
-	const db = new MongoDB();
+	const db = MongoDB;
 	const otpData: OTPData | null = (await db.otps.findOne({ otpToken: otpToken })) as OTPData | null;
 	if (otpData === null) {
 		return {
@@ -201,7 +201,7 @@ export async function DELETE(event: RequestEvent) {
 			}
 		};
 	}
-	const db = new MongoDB();
+	const db = MongoDB;
 	const userData: UserDoc = (await db.users.findOne({ sessions: session })) as UserDoc;
 	if (userData === null) {
 		return {

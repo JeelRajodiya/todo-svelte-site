@@ -16,7 +16,7 @@ export async function POST(event: RequestEvent) {
 		};
 	}
 	const passwordHash = md5(password);
-	const db = new MongoDB();
+	const db = MongoDB;
 	const userData: UserDoc = (await db.users.findOne({ email })) as UserDoc;
 
 	if (userData == null) {
@@ -61,7 +61,7 @@ export async function DELETE(event: RequestEvent) {
 			}
 		};
 	}
-	const db = new MongoDB();
+	const db = MongoDB;
 	db.users.updateOne({ sessions: session }, { $pull: { sessions: session } });
 	return {
 		status: 200,

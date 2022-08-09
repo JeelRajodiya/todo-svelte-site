@@ -59,7 +59,7 @@ export async function DELETE(event: RequestEvent) {
 		return {
 			status: 400,
 			body: {
-				message: 'can not find user'
+				message: 'Invalid session ID'
 			}
 		};
 	}
@@ -76,4 +76,29 @@ export async function DELETE(event: RequestEvent) {
 	return {
 		status: 200
 	};
+}
+
+export async function PUT(event: RequestEvent) {
+	const tasklistID: string = event.params.tasklistID;
+
+	const session: string = event.request.headers.get('Authorization') as string;
+	if (session == null) {
+		return {
+			status: 400,
+			body: {
+				message: 'make sure authorization header  is present'
+			}
+		};
+	}
+	const db = MongoDB;
+	const user = await db.users.findOne({ sessions: session });
+	if (user === null) {
+		return {
+			status: 400,
+			body: {
+				message: 'Invalid session ID'
+			}
+		};
+	}
+	const userID = user.id;
 }

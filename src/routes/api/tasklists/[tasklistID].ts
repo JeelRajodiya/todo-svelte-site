@@ -151,3 +151,61 @@ export async function PUT(event: RequestEvent) {
 		body: newTaskListDoc
 	};
 }
+
+export async function PATCH(event: RequestEvent) {
+	const tasklistID: string = event.params.tasklistID;
+
+	const session: string = event.request.headers.get('Authorization') as string;
+	if (session == null) {
+		return {
+			status: 400,
+			body: {
+				message: 'make sure authorization header  is present'
+			}
+		};
+	}
+	const db = MongoDB;
+	const user = await db.users.findOne({ sessions: session });
+	if (user === null) {
+		return {
+			status: 400,
+			body: {
+				message: 'Invalid session ID'
+			}
+		};
+	}
+	const userID = user.id;
+	const taskListDoc = await db.tasklists.findOne({ userID, id: tasklistID });
+	if (taskListDoc === null) {
+		return {
+			status: 400,
+			body: {
+				message: 'wrong tasklistID'
+			}
+		};
+	}
+	const body = await event.request.json();
+	const newDate = body.date ? body.date : new Date();
+	const newTaskListDoc = {
+		...taskListDoc,
+		updatedAt: newDate,
+		etag: etag(taskListDoc.title + newDate)
+	};
+
+	const updateResult = await db.tasklists.updateOne(
+		{ userID, id: tasklistID },
+		{ $set: newTaskListDoc }
+	);
+	if (updateResult.modifiedCount === 0) {
+		return {
+			status: 400,
+			body: {
+				message: 'nothing updated. something is wrong'
+			}
+		};
+	}
+	return {
+		status: 200,
+		body: newTaskListDoc
+	};
+}

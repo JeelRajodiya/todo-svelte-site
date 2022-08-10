@@ -1,8 +1,9 @@
 import type { RequestEvent } from '@sveltejs/kit';
 import MongoDB from '$lib/database';
 import { stringToBool } from '$lib/util/functions';
-import type { Tasks } from '$lib/util/types';
+import type { TaskDoc, Tasks } from '$lib/util/types';
 import etag from 'etag';
+import { v4 as uuidv4 } from 'uuid';
 export async function GET(event: RequestEvent) {
 	const queryParams = {
 		// completedMax: event.url.searchParams.get('completedMax')
@@ -26,7 +27,7 @@ export async function GET(event: RequestEvent) {
 		// 	? event.url.searchParams.get('updatedMin')
 		// 	: null
 	};
-	const taskListID: string = event.params.tasklistID;
+	const taskListID: string = event.params.taskListID;
 
 	const session: string = event.request.headers.get('Authorization') as string;
 	if (session == null) {
@@ -71,5 +72,64 @@ export async function GET(event: RequestEvent) {
 	return {
 		status: 200,
 		body: tasks
+	};
+}
+
+export async function POST(event: RequestEvent) {
+	const taskListID: string = event.params.taskListID;
+
+	const session: string = event.request.headers.get('Authorization') as string;
+	if (session == null) {
+		return {
+			status: 400,
+			body: {
+				message: 'make sure authorization header  is present'
+			}
+		};
+	}
+	const db = MongoDB;
+	const user = await db.users.findOne({ sessions: session });
+	if (user === null) {
+		return {
+			status: 400,
+			body: {
+				message: 'Invalid session ID'
+			}
+		};
+	}
+	const userID = user.id;
+	const body = await event.request.json();
+	if (body.title == undefined || body.position == undefined) {
+		return {
+			status: 400,
+			body: { message: 'body must have title, position property' }
+		};
+	}
+
+	// avalible body arguments
+	// title,notes,due ,position,parent,updatedOn,links,parent
+	const newTask: TaskDoc = {
+		id: uuidv4(),
+		taskListID,
+		userID,
+		title: body.title,
+		notes: body.notes ? body.notes : '',
+		due: body.due ? body.due : null,
+		hidden: false,
+		deleted: false,
+		isCompleted: false,
+		updatedOn: body.date ? body.date : new Date(),
+		position: body.position,
+		links: body.links ? body.links : [],
+		parent: body.parent ? body.parent : null,
+		etag: etag(JSON.stringify(body))
+	};
+	await db.tasks.insertOne(newTask);
+	return {
+		status: 200,
+		body: {
+			message: 'task created',
+			task: newTask
+		}
 	};
 }

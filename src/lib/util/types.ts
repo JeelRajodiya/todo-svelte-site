@@ -55,7 +55,7 @@ export interface TaskDoc {
 	taskListID: string; // parent Task list identifier.
 	etag: string; // ETag of the resource.
 	title: string; // Title of the task.
-	updated: string; // Last modification time of the task (as a RFC 3339 timestamp).
+	updatedOn: string; // Last modification time of the task (as a RFC 3339 timestamp).
 	selfLink?: string; // URL pointing to this task. Used to retrieve, update, or delete this task.
 	parent?: string; // Parent task identifier. This field is omitted if it is a top-level task. This field is read-only. Use the "move" method to move the task under a different parent or to the top level.
 	position: number; // String indicating the position of the task among its sibling tasks under the same parent task or at the top level. If this string is greater than another task's corresponding position string according to lexicographical ordering, the task is positioned after the other task under the same parent task (or at the top level). This field is read-only. Use the "move" method to move the task to another position.

@@ -3,7 +3,7 @@ import type { RequestEvent } from '@sveltejs/kit';
 import etag from 'etag';
 
 export async function GET(event: RequestEvent) {
-	const tasklistID: string = event.params.tasklistID;
+	const tasklistID: string = event.params.taskListID;
 
 	const session: string = event.request.headers.get('Authorization') as string;
 	if (session == null) {
@@ -43,7 +43,7 @@ export async function GET(event: RequestEvent) {
 }
 
 export async function DELETE(event: RequestEvent) {
-	const tasklistID: string = event.params.tasklistID;
+	const tasklistID: string = event.params.taskListID;
 
 	const session: string = event.request.headers.get('Authorization') as string;
 	if (session == null) {
@@ -80,7 +80,7 @@ export async function DELETE(event: RequestEvent) {
 }
 
 export async function PUT(event: RequestEvent) {
-	const tasklistID: string = event.params.tasklistID;
+	const tasklistID: string = event.params.taskListID;
 
 	const session: string = event.request.headers.get('Authorization') as string;
 	if (session == null) {
@@ -153,7 +153,7 @@ export async function PUT(event: RequestEvent) {
 }
 
 export async function PATCH(event: RequestEvent) {
-	const tasklistID: string = event.params.tasklistID;
+	const tasklistID: string = event.params.taskListID;
 
 	const session: string = event.request.headers.get('Authorization') as string;
 	if (session == null) {

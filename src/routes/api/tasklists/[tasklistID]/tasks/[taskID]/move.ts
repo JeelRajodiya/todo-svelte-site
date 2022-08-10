@@ -38,7 +38,7 @@ export async function POST(event: RequestEvent) {
 	}
 	const body = await event.request.json();
 	const isChild = stringToBool(body.isChild, false);
-	const newPosition = body.newPosition;
+	let newPosition = body.newPosition;
 	// getting the currentPosition of the task before it gets deleted
 	const taskPosition = tasks.filter((i) => i.id == taskID)[0].position;
 	if (newPosition == undefined) {
@@ -47,6 +47,7 @@ export async function POST(event: RequestEvent) {
 			body: { message: 'provide newPosition arguments in body' }
 		};
 	}
+	newPosition = Number(newPosition);
 
 	// removing the current task from list
 	tasks = tasks.filter((i) => i.id != taskID);
@@ -62,7 +63,9 @@ export async function POST(event: RequestEvent) {
 			tasks[i].position = p + 1;
 		}
 	}
-	const updateResult = await db.tasks.updateMany({ userID, taskListID }, tasks);
+
+	const updateResult = await db.tasks.updateMany({ userID, taskListID }, { $set: tasks });
+
 	return {
 		status: 200,
 		body: {

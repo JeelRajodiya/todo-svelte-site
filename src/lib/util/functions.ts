@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import DB from '$lib/database';
+import MongoDB from '$lib/database';
 import md5 from 'md5';
 
 import { JWT_SECRET } from '$env/static/private';
@@ -39,11 +39,21 @@ export function genOTP(): number {
 }
 
 export async function checkForDuplicateEmail(email: string): Promise<boolean> {
-	const db = new DB();
+	const db = MongoDB;
 	const activeAccount = await db.users.count({ email: { $eq: email } });
 	if (activeAccount > 0) {
 		return true;
 	} else {
 		return false;
 	}
+}
+
+export function stringToBool(s: string | null, defaultBool: boolean): boolean {
+	if (s === 'true') {
+		return true;
+	} else if (s === 'false') {
+		return false;
+	}
+
+	return defaultBool;
 }

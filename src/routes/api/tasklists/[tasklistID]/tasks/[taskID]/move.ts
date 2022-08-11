@@ -56,20 +56,54 @@ export async function POST(event: RequestEvent) {
 	// rest remains same
 
 	let p; // position
-	for (let i = 0; i < tasks.length; i++) {
-		p = tasks[i].position;
+	let modifiedCount = 0;
 
-		if (p >= newPosition && p <= taskPosition) {
-			tasks[i].position = p + 1;
-		}
+	if (Math.abs(newPosition - taskPosition) == 1) {
+		// if the tasks are in sub sequent order we will swap the positions
+		modifiedCount += (
+			await db.tasks.updateOne(
+				{ userID, taskListID, position: newPosition },
+				{ $set: { position: taskPosition } }
+			)
+		).modifiedCount;
+		modifiedCount += (
+			await db.tasks.updateOne(
+				{ userID, taskListID, position: taskPosition },
+				{ $set: { position: newPosition } }
+			)
+		).modifiedCount;
 	}
 
-	const updateResult = await db.tasks.updateMany({ userID, taskListID }, { $set: tasks });
-
+	for (let i = 0; i < tasks.length; i++) {
+		p = tasks[i].position;
+		console.log(p, newPosition, taskPosition);
+		// P >= 5 && P < 1
+		if (p >= newPosition && p < taskPosition) {
+			modifiedCount += (
+				await db.tasks.updateOne(
+					{ userID, taskListID, id: tasks[i].id },
+					{ $set: { position: p + 1 } }
+				)
+			).modifiedCount;
+		} else if (p <= newPosition && p > taskPosition) {
+			modifiedCount += (
+				await db.tasks.updateOne(
+					{ userID, taskListID, id: tasks[i].id },
+					{ $set: { position: p - 1 } }
+				)
+			).modifiedCount;
+		}
+	}
+	modifiedCount += (
+		await db.tasks.updateOne(
+			{ userID, taskListID, id: taskID },
+			{ $set: { position: newPosition } }
+		)
+	).modifiedCount;
 	return {
 		status: 200,
 		body: {
-			message: `updated ${updateResult.modifiedCount} tasks`
+			message: `updated ${modifiedCount} tasks`
 		}
 	};
 }

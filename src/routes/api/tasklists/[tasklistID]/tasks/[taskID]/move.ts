@@ -1,6 +1,5 @@
 import type { RequestEvent } from '@sveltejs/kit';
 import MongoDB from '$lib/database';
-import { stringToBool } from '$lib/util/functions';
 
 export async function POST(event: RequestEvent) {
 	const taskListID: string = event.params.taskListID;
@@ -30,7 +29,7 @@ export async function POST(event: RequestEvent) {
 	const body = await event.request.json();
 	// if it is a child then parent ID must be provided
 
-	const isChild = stringToBool(body.isChild, false);
+	const isChild = body.isChild ? true : false;
 	if (body.isChild === true && body.parentID == undefined) {
 		return {
 			status: 400,
@@ -56,12 +55,16 @@ export async function POST(event: RequestEvent) {
 		}
 		parentSelector = { parent: parentID };
 		tasks = await db.tasks
-			.find({ userID, taskListID, parent: parentID })
+			.find({ userID, taskListID, ...parentSelector })
 			.sort({ position: 1 })
 			.toArray();
+
 		if (tasks.length === 0) {
 			// there no children
-			db.tasks.updateOne({ userID, taskListID, id: taskID }, { parent: parentID, position: 1 });
+			db.tasks.updateOne(
+				{ userID, taskListID, id: taskID },
+				{ $set: { parent: parentID, position: 1 } }
+			);
 			return {
 				status: 200,
 				body: {
@@ -74,11 +77,15 @@ export async function POST(event: RequestEvent) {
 	}
 
 	const taskDoc = tasks.filter((i) => i.id == taskID)[0];
-	let taskPosition;
+	console.log(tasks);
+	let taskPosition: number;
 	// if the task is a child and doesn't want to be anymore
 	if (isChild === false && taskDoc.parent != null) {
 		taskPosition = tasks.length;
 		db.tasks.updateOne({ userID, taskListID, id: taskID }, { $set: { parent: null } });
+	} else if (isChild === true && taskDoc == undefined) {
+		// is not a child and wants to be one
+		taskPosition = tasks.length;
 	} else {
 		taskPosition = taskDoc.position;
 	}

@@ -1,5 +1,6 @@
 import type { RequestEvent } from '@sveltejs/kit';
 import MongoDB from '$lib/database';
+// child support is abandon  but will be implemented in future
 
 export async function POST(event: RequestEvent) {
 	const taskListID: string = event.params.taskListID;
@@ -14,6 +15,7 @@ export async function POST(event: RequestEvent) {
 			}
 		};
 	}
+
 	const db = MongoDB;
 	const user = await db.users.findOne({ sessions: session });
 	if (user === null) {
@@ -29,7 +31,7 @@ export async function POST(event: RequestEvent) {
 	const body = await event.request.json();
 	// if it is a child then parent ID must be provided
 
-	const isChild = body.isChild ? true : false;
+	// const isChild = body.isChild ? true : false;
 	if (body.isChild === true && body.parentID == undefined) {
 		return {
 			status: 400,
@@ -38,6 +40,7 @@ export async function POST(event: RequestEvent) {
 			}
 		};
 	}
+
 	let tasks;
 	// parent Selector represent parent ID if the isChild is true
 	// so it can be used in mongodb selection query otherwise it is emitted

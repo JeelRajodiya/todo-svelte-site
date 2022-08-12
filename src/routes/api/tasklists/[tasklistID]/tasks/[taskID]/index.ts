@@ -66,7 +66,7 @@ export async function PUT(event: RequestEvent) {
 	const userID = user.id;
 
 	db.tasks.updateOne({ userID, taskListID, id: taskID }, { $set: body });
-	const taskDoc = await db.tasks.findOne({ userID, taskListID, id: taskID });
+	let taskDoc = await db.tasks.findOne({ userID, taskListID, id: taskID });
 	if (taskDoc === null) {
 		return {
 			status: 400,
@@ -89,11 +89,69 @@ export async function PUT(event: RequestEvent) {
 			}
 		}
 	);
+	taskDoc = await db.tasks.findOne({ userID, taskListID, id: taskID });
 
 	return {
 		status: 200,
 		body: {
-			message: `modified `
+			message: taskDoc
+		}
+	};
+}
+
+export async function PATCH(event: RequestEvent) {
+	const taskListID: string = event.params.taskListID;
+	const taskID: string = event.params.taskID;
+	const session: string = event.request.headers.get('Authorization') as string;
+	if (session == null) {
+		return {
+			status: 400,
+			body: {
+				message: 'make sure authorization header  is present'
+			}
+		};
+	}
+	const db = MongoDB;
+	const user = await db.users.findOne({ sessions: session });
+	if (user === null) {
+		return {
+			status: 400,
+			body: {
+				message: 'can not find user'
+			}
+		};
+	}
+	const userID = user.id;
+
+	let taskDoc = await db.tasks.findOne({ userID, taskListID, id: taskID });
+	if (taskDoc === null) {
+		return {
+			status: 400,
+			body: { message: 'something went wrong ' }
+		};
+	}
+	db.tasks.updateOne(
+		{ userID, taskListID, id: taskID },
+		{
+			$set: {
+				etag: etag(
+					String(taskDoc.isCompleted) +
+						taskDoc?.links +
+						taskDoc?.due +
+						taskDoc?.notes +
+						taskDoc?.parent +
+						taskDoc.position +
+						taskDoc.updatedOn
+				)
+			}
+		}
+	);
+	taskDoc = await db.tasks.findOne({ userID, taskListID, id: taskID });
+
+	return {
+		status: 200,
+		body: {
+			message: taskDoc
 		}
 	};
 }

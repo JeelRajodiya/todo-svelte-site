@@ -42,53 +42,48 @@ export async function POST(event: RequestEvent) {
 	// parent Selector represent parent ID if the isChild is true
 	// so it can be used in mongodb selection query otherwise it is emitted
 
-	let parentSelector = {};
-	if (isChild === true) {
-		const parentID = body.parentID;
-		if ((await db.tasks.count({ userID, taskListID, id: parentID })) === 0) {
-			return {
-				status: 200,
-				body: {
-					message: 'No such parent exist. Wrong parent ID.'
-				}
-			};
-		}
-		parentSelector = { parent: parentID };
-		tasks = await db.tasks
-			.find({ userID, taskListID, ...parentSelector })
-			.sort({ position: 1 })
-			.toArray();
+	// let parentSelector = {};
+	// if (isChild === true) {
+	// const parentID = body.parentID;
+	// 	if ((await db.tasks.count({ userID, taskListID, id: parentID })) === 0) {
+	// 		return {
+	// 			status: 200,
+	// 			body: {
+	// 				message: 'No such parent exist. Wrong parent ID.'
+	// 			}
+	// 		};
+	// 	}
+	// 	parentSelector = { parent: parentID };
+	// 	tasks = await db.tasks
+	// 		.find({ userID, taskListID, ...parentSelector })
+	// 		.sort({ position: 1 })
+	// 		.toArray();
 
-		if (tasks.length === 0) {
-			// there no children
-			db.tasks.updateOne(
-				{ userID, taskListID, id: taskID },
-				{ $set: { parent: parentID, position: 1 } }
-			);
-			return {
-				status: 200,
-				body: {
-					message: 'created a child'
-				}
-			};
-		}
-	} else {
-		tasks = await db.tasks.find({ userID, taskListID }).sort({ position: 1 }).toArray();
-	}
+	// 	if (tasks.length === 0) {
+	// 		// there no children
+	// 		db.tasks.updateOne(
+	// 			{ userID, taskListID, id: taskID },
+	// 			{ $set: { parent: parentID, position: 1 } }
+	// 		);
+
+	// 	}
+	// } else {
+	tasks = await db.tasks.find({ userID, taskListID }).sort({ position: 1 }).toArray();
+	// }
 
 	const taskDoc = tasks.filter((i) => i.id == taskID)[0];
-	console.log(tasks);
+	// console.log(tasks);
 	let taskPosition: number;
 	// if the task is a child and doesn't want to be anymore
-	if (isChild === false && taskDoc.parent != null) {
-		taskPosition = tasks.length;
-		db.tasks.updateOne({ userID, taskListID, id: taskID }, { $set: { parent: null } });
-	} else if (isChild === true && taskDoc == undefined) {
-		// is not a child and wants to be one
-		taskPosition = tasks.length;
-	} else {
-		taskPosition = taskDoc.position;
-	}
+	// if (isChild === false && taskDoc.parent != null) {
+	// taskPosition = tasks.length;
+	// db.tasks.updateOne({ userID, taskListID, id: taskID }, { $set: { parent: null } });
+	// } else if (isChild === true && taskDoc == undefined) {
+	// is not a child and wants to be one
+	taskPosition = tasks.length;
+	// } else {
+	taskPosition = taskDoc.position;
+	// }
 	let newPosition = body.newPosition;
 	// getting the currentPosition of the task before it gets deleted
 	if (newPosition == undefined) {
@@ -113,13 +108,13 @@ export async function POST(event: RequestEvent) {
 		// if the tasks are in sub sequent order we will swap the positions
 		modifiedCount += (
 			await db.tasks.updateOne(
-				{ userID, taskListID, position: newPosition, ...parentSelector },
+				{ userID, taskListID, position: newPosition },
 				{ $set: { position: taskPosition } }
 			)
 		).modifiedCount;
 		modifiedCount += (
 			await db.tasks.updateOne(
-				{ userID, taskListID, position: taskPosition, ...parentSelector },
+				{ userID, taskListID, position: taskPosition },
 				{ $set: { position: newPosition } }
 			)
 		).modifiedCount;
@@ -132,14 +127,14 @@ export async function POST(event: RequestEvent) {
 		if (p >= newPosition && p < taskPosition) {
 			modifiedCount += (
 				await db.tasks.updateOne(
-					{ userID, taskListID, id: tasks[i].id, ...parentSelector },
+					{ userID, taskListID, id: tasks[i].id },
 					{ $set: { position: p + 1 } }
 				)
 			).modifiedCount;
 		} else if (p <= newPosition && p > taskPosition) {
 			modifiedCount += (
 				await db.tasks.updateOne(
-					{ userID, taskListID, id: tasks[i].id, ...parentSelector },
+					{ userID, taskListID, id: tasks[i].id },
 					{ $set: { position: p - 1 } }
 				)
 			).modifiedCount;
@@ -147,7 +142,7 @@ export async function POST(event: RequestEvent) {
 	}
 	modifiedCount += (
 		await db.tasks.updateOne(
-			{ userID, taskListID, id: taskID, ...parentSelector },
+			{ userID, taskListID, id: taskID },
 			{ $set: { position: newPosition } }
 		)
 	).modifiedCount;

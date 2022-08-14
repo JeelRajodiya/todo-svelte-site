@@ -55,7 +55,8 @@ export async function POST(event: RequestEvent) {
 		headers: {
 			authorization: session,
 			'access-control-allow-origin': '*',
-			'access-control-allow-credentials': 'true'
+			'access-control-allow-credentials': 'true',
+			'access-control-allow-headers': 'authorization'
 		},
 		body: {
 			message: 'Login successful'

@@ -53,12 +53,10 @@ export async function POST(event: RequestEvent) {
 	return {
 		status: 200,
 		headers: {
-			authorization: session,
-			'access-control-allow-origin': '*',
-			'access-control-allow-credentials': 'true',
-			'access-control-allow-headers': 'authorization'
+			'access-control-allow-origin': '*'
 		},
 		body: {
+			authorization: session,
 			message: 'Login successful'
 		}
 	};

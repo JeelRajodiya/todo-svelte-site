@@ -67,11 +67,11 @@ export async function POST(event: RequestEvent) {
 		statusCode: 200,
 
 		headers: {
-			Authorization: otpToken, // jwt
 			'Access-Control-Allow-Credentials': true,
 			'Access-Control-Allow-Origin': '*'
 		},
 		body: {
+			Authorization: otpToken, // jwt
 			clientMail: mailSentTo // this will be show to the client so he can confirm that the sent email is his
 		}
 	};
@@ -160,11 +160,11 @@ export async function PUT(event: RequestEvent) {
 		status: 200,
 
 		headers: {
-			Authorization: session,
 			'Access-Control-Allow-Credentials': true,
 			'Access-Control-Allow-Origin': '*'
 		},
 		body: {
+			Authorization: session,
 			message: 'OTP Verified'
 		}
 	};

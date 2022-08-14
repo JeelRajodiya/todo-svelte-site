@@ -10,6 +10,9 @@ export async function POST(event: RequestEvent) {
 	if (email === undefined || password === undefined) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
 			body: {
 				message: 'email and password are not provided in body as json'
 			}

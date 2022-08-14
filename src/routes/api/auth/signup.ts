@@ -66,7 +66,7 @@ export async function POST(event: RequestEvent) {
 	db.otps.insertOne(otpDoc);
 
 	return {
-		statusCode: 200,
+		status: 200,
 
 		headers: {
 			'Access-Control-Allow-Credentials': true,
@@ -112,7 +112,7 @@ export async function PUT(event: RequestEvent) {
 
 	if (decodedData.email === '') {
 		return {
-			statusCode: 401,
+			status: 401,
 			headers: {
 				'Access-Control-Allow-Origin': '*',
 				'Access-Control-Allow-Headers': '*'

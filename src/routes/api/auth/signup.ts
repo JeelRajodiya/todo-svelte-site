@@ -25,8 +25,8 @@ export async function POST(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
 
 			body: {
@@ -40,8 +40,8 @@ export async function POST(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
 
 			body: {
@@ -70,8 +70,8 @@ export async function POST(event: RequestEvent) {
 
 		headers: {
 			'Access-Control-Allow-Credentials': true,
-				'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*',
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Headers': '*'
 		},
 		body: {
 			Authorization: otpToken, // jwt
@@ -87,8 +87,8 @@ export async function PUT(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
 
 			body: {
@@ -114,8 +114,8 @@ export async function PUT(event: RequestEvent) {
 		return {
 			statusCode: 401,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
 
 			body: {
@@ -139,10 +139,10 @@ export async function PUT(event: RequestEvent) {
 	}
 	if (!isVerified) {
 		return {
-			statusCode: 401,
+			status: 401,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
 
 			body: {
@@ -167,7 +167,7 @@ export async function PUT(event: RequestEvent) {
 
 		headers: {
 			'Access-Control-Allow-Credentials': true,
-				'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Origin': '*',
 			'Access-Control-Allow-Headers': '*'
 		},
 		body: {
@@ -184,8 +184,8 @@ export async function PATCH(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
 
 			body: {
@@ -199,8 +199,8 @@ export async function PATCH(event: RequestEvent) {
 		return {
 			status: 403,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
 
 			body: {
@@ -213,7 +213,7 @@ export async function PATCH(event: RequestEvent) {
 	return {
 		status: 200,
 		headers: {
-				'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Origin': '*',
 			'Access-Control-Allow-Headers': '*'
 		},
 
@@ -234,8 +234,8 @@ export async function DELETE(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
 
 			body: {
@@ -246,8 +246,8 @@ export async function DELETE(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
 
 			body: {
@@ -261,8 +261,8 @@ export async function DELETE(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
 
 			body: {
@@ -275,8 +275,8 @@ export async function DELETE(event: RequestEvent) {
 		return {
 			status: 401,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
 
 			body: {
@@ -291,7 +291,7 @@ export async function DELETE(event: RequestEvent) {
 	return {
 		status: 200,
 		headers: {
-				'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Origin': '*',
 			'Access-Control-Allow-Headers': '*'
 		},
 

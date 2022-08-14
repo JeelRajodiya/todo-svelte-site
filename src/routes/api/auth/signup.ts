@@ -161,7 +161,7 @@ export async function PUT(event: RequestEvent) {
 
 		headers: {
 			'Access-Control-Allow-Credentials': true,
-			'Access-Control-Allow-Origin': '*'
+			'access-control-allow-origin': '*'
 		},
 		body: {
 			Authorization: session,

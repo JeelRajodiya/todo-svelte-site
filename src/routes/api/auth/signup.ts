@@ -119,9 +119,7 @@ export async function PUT(event: RequestEvent) {
 			},
 
 			body: {
-				message: 'OTP Expired',
-				data: decodedData,
-				otpToken
+				message: 'OTP Expired'
 			}
 		};
 	}

@@ -22,6 +22,10 @@ export async function POST(event: RequestEvent) {
 	if (userData == null) {
 		return {
 			status: 404,
+
+			headers: {
+				'access-control-allow-origin': '*'
+			},
 			body: {
 				message: 'Email not found'
 			}
@@ -42,7 +46,8 @@ export async function POST(event: RequestEvent) {
 	return {
 		status: 200,
 		headers: {
-			authorization: session
+			authorization: session,
+			'access-control-allow-origin': '*'
 		},
 		body: {
 			message: 'Login successful'
@@ -56,6 +61,10 @@ export async function DELETE(event: RequestEvent) {
 	if (session === undefined) {
 		return {
 			status: 400,
+
+			headers: {
+				'access-control-allow-origin': '*'
+			},
 			body: {
 				message: 'Authorization header is not provided'
 			}
@@ -65,6 +74,10 @@ export async function DELETE(event: RequestEvent) {
 	db.users.updateOne({ sessions: session }, { $pull: { sessions: session } });
 	return {
 		status: 200,
+
+		headers: {
+			'access-control-allow-origin': '*'
+		},
 		body: {
 			message: 'Logout successful'
 		}

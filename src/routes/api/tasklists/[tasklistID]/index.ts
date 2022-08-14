@@ -10,7 +10,7 @@ export async function GET(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-				'access-control-allow-origin': '*'
+				'Access-Control-Allow-Origin': '*'
 			},
 			
 			body: {
@@ -24,7 +24,7 @@ export async function GET(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-				'access-control-allow-origin': '*'
+				'Access-Control-Allow-Origin': '*'
 			},
 			
 			body: {
@@ -38,7 +38,7 @@ export async function GET(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-				'access-control-allow-origin': '*'
+				'Access-Control-Allow-Origin': '*'
 			},
 			
 			body: {
@@ -50,7 +50,7 @@ export async function GET(event: RequestEvent) {
 	return {
 		status: 200,
 		headers: {
-			'access-control-allow-origin': '*'
+			'Access-Control-Allow-Origin': '*'
 		},
 		
 
@@ -66,7 +66,7 @@ export async function DELETE(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-				'access-control-allow-origin': '*'
+				'Access-Control-Allow-Origin': '*'
 			},
 			
 			body: {
@@ -80,7 +80,7 @@ export async function DELETE(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-				'access-control-allow-origin': '*'
+				'Access-Control-Allow-Origin': '*'
 			},
 			
 			body: {
@@ -94,7 +94,7 @@ export async function DELETE(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-				'access-control-allow-origin': '*'
+				'Access-Control-Allow-Origin': '*'
 			},
 			
 			body: {
@@ -105,7 +105,7 @@ export async function DELETE(event: RequestEvent) {
 	return {
 		status: 200,
 		headers: {
-			'access-control-allow-origin': '*'
+			'Access-Control-Allow-Origin': '*'
 		}
 		
 	};
@@ -119,7 +119,7 @@ export async function PUT(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-				'access-control-allow-origin': '*'
+				'Access-Control-Allow-Origin': '*'
 			},
 			
 			body: {
@@ -133,7 +133,7 @@ export async function PUT(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-				'access-control-allow-origin': '*'
+				'Access-Control-Allow-Origin': '*'
 			},
 			
 			body: {
@@ -147,7 +147,7 @@ export async function PUT(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-				'access-control-allow-origin': '*'
+				'Access-Control-Allow-Origin': '*'
 			},
 			
 			body: {
@@ -173,7 +173,7 @@ export async function PUT(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-				'access-control-allow-origin': '*'
+				'Access-Control-Allow-Origin': '*'
 			},
 			
 			body: {
@@ -190,7 +190,7 @@ export async function PUT(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-				'access-control-allow-origin': '*'
+				'Access-Control-Allow-Origin': '*'
 			},
 			
 			body: {
@@ -201,7 +201,7 @@ export async function PUT(event: RequestEvent) {
 	return {
 		status: 200,
 		headers: {
-			'access-control-allow-origin': '*'
+			'Access-Control-Allow-Origin': '*'
 		},
 		
 		body: newTaskListDoc
@@ -216,7 +216,7 @@ export async function PATCH(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-				'access-control-allow-origin': '*'
+				'Access-Control-Allow-Origin': '*'
 			},
 			
 			body: {
@@ -230,7 +230,7 @@ export async function PATCH(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-				'access-control-allow-origin': '*'
+				'Access-Control-Allow-Origin': '*'
 			},
 			
 			body: {
@@ -244,7 +244,7 @@ export async function PATCH(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-				'access-control-allow-origin': '*'
+				'Access-Control-Allow-Origin': '*'
 			},
 			
 			body: {
@@ -268,7 +268,7 @@ export async function PATCH(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-				'access-control-allow-origin': '*'
+				'Access-Control-Allow-Origin': '*'
 			},
 			
 			body: {
@@ -279,7 +279,7 @@ export async function PATCH(event: RequestEvent) {
 	return {
 		status: 200,
 		headers: {
-			'access-control-allow-origin': '*'
+			'Access-Control-Allow-Origin': '*'
 		},
 		
 		body: newTaskListDoc

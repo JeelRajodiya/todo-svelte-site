@@ -10,7 +10,7 @@ export async function POST(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-				'access-control-allow-origin': '*'
+				'Access-Control-Allow-Origin': '*'
 			},
 
 			body: {
@@ -24,7 +24,7 @@ export async function POST(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-				'access-control-allow-origin': '*'
+				'Access-Control-Allow-Origin': '*'
 			},
 
 			body: {
@@ -37,7 +37,7 @@ export async function POST(event: RequestEvent) {
 	return {
 		status: 200,
 		headers: {
-			'access-control-allow-origin': '*'
+			'Access-Control-Allow-Origin': '*'
 		},
 
 		body: {

@@ -10,10 +10,10 @@ export async function GET(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
-			
+
 			body: {
 				message: 'make sure authorization header  is present'
 			}
@@ -25,10 +25,10 @@ export async function GET(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
-			
+
 			body: {
 				message: 'can not find user'
 			}
@@ -40,10 +40,10 @@ export async function GET(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
-			
+
 			body: {
 				message: 'wrong tasklistID'
 			}
@@ -53,10 +53,9 @@ export async function GET(event: RequestEvent) {
 	return {
 		status: 200,
 		headers: {
-				'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Origin': '*',
 			'Access-Control-Allow-Headers': '*'
 		},
-		
 
 		body: tasklist
 	};
@@ -70,10 +69,10 @@ export async function DELETE(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
-			
+
 			body: {
 				message: 'make sure authorization header  is present'
 			}
@@ -85,10 +84,10 @@ export async function DELETE(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
-			
+
 			body: {
 				message: 'Invalid session ID'
 			}
@@ -100,10 +99,10 @@ export async function DELETE(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
-			
+
 			body: {
 				message: 'wrong tasklistID'
 			}
@@ -112,10 +111,9 @@ export async function DELETE(event: RequestEvent) {
 	return {
 		status: 200,
 		headers: {
-				'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Origin': '*',
 			'Access-Control-Allow-Headers': '*'
 		}
-		
 	};
 }
 
@@ -127,10 +125,10 @@ export async function PUT(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
-			
+
 			body: {
 				message: 'make sure authorization header  is present'
 			}
@@ -142,10 +140,10 @@ export async function PUT(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
-			
+
 			body: {
 				message: 'Invalid session ID'
 			}
@@ -157,10 +155,10 @@ export async function PUT(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
-			
+
 			body: {
 				message: 'wrong tasklistID'
 			}
@@ -184,10 +182,10 @@ export async function PUT(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
-			
+
 			body: {
 				message: 'tasklist with same title already exists'
 			}
@@ -202,10 +200,10 @@ export async function PUT(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
-			
+
 			body: {
 				message: 'nothing updated. something is wrong'
 			}
@@ -214,10 +212,10 @@ export async function PUT(event: RequestEvent) {
 	return {
 		status: 200,
 		headers: {
-				'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Origin': '*',
 			'Access-Control-Allow-Headers': '*'
 		},
-		
+
 		body: newTaskListDoc
 	};
 }
@@ -230,10 +228,10 @@ export async function PATCH(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
-			
+
 			body: {
 				message: 'make sure authorization header  is present'
 			}
@@ -245,10 +243,10 @@ export async function PATCH(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
-			
+
 			body: {
 				message: 'Invalid session ID'
 			}
@@ -260,10 +258,10 @@ export async function PATCH(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
-			
+
 			body: {
 				message: 'wrong tasklistID'
 			}
@@ -285,10 +283,10 @@ export async function PATCH(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
-			
+
 			body: {
 				message: 'nothing updated. something is wrong'
 			}
@@ -297,10 +295,19 @@ export async function PATCH(event: RequestEvent) {
 	return {
 		status: 200,
 		headers: {
-				'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Origin': '*',
 			'Access-Control-Allow-Headers': '*'
 		},
-		
+
 		body: newTaskListDoc
+	};
+}
+export function OPTIONS(event: RequestEvent) {
+	return {
+		status: 200,
+		headers: {
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Headers': '*'
+		}
 	};
 }

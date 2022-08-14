@@ -7,8 +7,8 @@ export async function GET(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
 
 			body: {
@@ -22,8 +22,8 @@ export async function GET(event: RequestEvent) {
 		return {
 			status: 403,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
 
 			body: {
@@ -34,7 +34,17 @@ export async function GET(event: RequestEvent) {
 	return {
 		status: 200,
 		headers: {
-				'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Headers': '*'
+		}
+	};
+}
+
+export function OPTIONS(event: RequestEvent) {
+	return {
+		status: 200,
+		headers: {
+			'Access-Control-Allow-Origin': '*',
 			'Access-Control-Allow-Headers': '*'
 		}
 	};

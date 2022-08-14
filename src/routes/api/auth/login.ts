@@ -96,3 +96,12 @@ export async function DELETE(event: RequestEvent) {
 		}
 	};
 }
+export function OPTIONS(event: RequestEvent) {
+	return {
+		status: 200,
+		headers: {
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Headers': '*'
+		}
+	};
+}

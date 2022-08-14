@@ -11,7 +11,8 @@ export async function POST(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-				'Access-Control-Allow-Origin': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
 			body: {
 				message: 'email and password are not provided in body as json'
@@ -27,7 +28,8 @@ export async function POST(event: RequestEvent) {
 			status: 404,
 
 			headers: {
-				'Access-Control-Allow-Origin': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
 			body: {
 				message: 'Email not found'
@@ -37,7 +39,8 @@ export async function POST(event: RequestEvent) {
 		return {
 			status: 403,
 			headers: {
-				'Access-Control-Allow-Origin': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
 
 			body: {
@@ -53,7 +56,8 @@ export async function POST(event: RequestEvent) {
 	return {
 		status: 200,
 		headers: {
-			'Access-Control-Allow-Origin': '*'
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Headers': '*'
 		},
 		body: {
 			authorization: session,
@@ -70,7 +74,8 @@ export async function DELETE(event: RequestEvent) {
 			status: 400,
 
 			headers: {
-				'Access-Control-Allow-Origin': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
 			body: {
 				message: 'Authorization header is not provided'
@@ -83,7 +88,8 @@ export async function DELETE(event: RequestEvent) {
 		status: 200,
 
 		headers: {
-			'Access-Control-Allow-Origin': '*'
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Headers': '*'
 		},
 		body: {
 			message: 'Logout successful'

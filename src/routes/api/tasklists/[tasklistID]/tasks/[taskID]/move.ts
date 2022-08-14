@@ -10,6 +10,10 @@ export async function POST(event: RequestEvent) {
 	if (session == null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'make sure authorization header  is present'
 			}
@@ -21,6 +25,10 @@ export async function POST(event: RequestEvent) {
 	if (user === null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'can not find user'
 			}
@@ -35,6 +43,10 @@ export async function POST(event: RequestEvent) {
 	if (body.isChild === true && body.parentID == undefined) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'parentID is not provided'
 			}
@@ -92,6 +104,10 @@ export async function POST(event: RequestEvent) {
 	if (newPosition == undefined) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: { message: 'provide newPosition arguments in body' }
 		};
 	}
@@ -151,6 +167,10 @@ export async function POST(event: RequestEvent) {
 	).modifiedCount;
 	return {
 		status: 200,
+		headers: {
+			'access-control-allow-origin': '*'
+		},
+
 		body: {
 			message: `updated ${modifiedCount} tasks`
 		}

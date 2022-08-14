@@ -33,6 +33,10 @@ export async function POST(event: RequestEvent) {
 	} else if (userData.passwordHash !== passwordHash) {
 		return {
 			status: 403,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'Password is incorrect'
 			}

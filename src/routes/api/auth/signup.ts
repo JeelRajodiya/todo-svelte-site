@@ -24,6 +24,10 @@ export async function POST(event: RequestEvent) {
 	if (email === undefined || password === undefined) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'email and password are not provided in body as json'
 			}
@@ -34,6 +38,10 @@ export async function POST(event: RequestEvent) {
 	if (isDuplicate) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'Email already exists'
 			}
@@ -57,6 +65,7 @@ export async function POST(event: RequestEvent) {
 
 	return {
 		statusCode: 200,
+
 		headers: {
 			Authorization: otpToken, // jwt
 			'Access-Control-Allow-Credentials': true,
@@ -74,6 +83,10 @@ export async function PUT(event: RequestEvent) {
 	if (otpToken == undefined) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'Otp token is not provided in authorization header'
 			}
@@ -96,6 +109,10 @@ export async function PUT(event: RequestEvent) {
 	if (decodedData.email === '') {
 		return {
 			statusCode: 401,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'OTP Expired'
 			}
@@ -118,6 +135,10 @@ export async function PUT(event: RequestEvent) {
 	if (!isVerified) {
 		return {
 			statusCode: 401,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'Invalid OTP'
 			}
@@ -137,6 +158,7 @@ export async function PUT(event: RequestEvent) {
 
 	return {
 		status: 200,
+
 		headers: {
 			Authorization: session,
 			'Access-Control-Allow-Credentials': true,
@@ -154,6 +176,10 @@ export async function PATCH(event: RequestEvent) {
 	if (otpToken == undefined) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'Otp token is not provided in authorization header'
 			}
@@ -164,6 +190,10 @@ export async function PATCH(event: RequestEvent) {
 	if (otpData === null) {
 		return {
 			status: 403,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'Given OTP Token is Invalid'
 			}
@@ -173,6 +203,10 @@ export async function PATCH(event: RequestEvent) {
 
 	return {
 		status: 200,
+		headers: {
+			'access-control-allow-origin': '*'
+		},
+
 		body: {
 			clientMail: mailSentTo // this will be show to the client so he can confirm that the sent email is his
 		}
@@ -189,6 +223,10 @@ export async function DELETE(event: RequestEvent) {
 	if (password === undefined) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'password is not provided in body as json'
 			}
@@ -196,6 +234,10 @@ export async function DELETE(event: RequestEvent) {
 	} else if (session === undefined) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'session is not provided in authorization header'
 			}
@@ -206,6 +248,10 @@ export async function DELETE(event: RequestEvent) {
 	if (userData === null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'Invalid session'
 			}
@@ -215,6 +261,10 @@ export async function DELETE(event: RequestEvent) {
 	if (userData.passwordHash !== md5(password)) {
 		return {
 			status: 401,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'Invalid Password'
 			}
@@ -226,6 +276,10 @@ export async function DELETE(event: RequestEvent) {
 
 	return {
 		status: 200,
+		headers: {
+			'access-control-allow-origin': '*'
+		},
+
 		body: {
 			message: 'Account Deleted'
 		}

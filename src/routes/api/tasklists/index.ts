@@ -69,6 +69,10 @@ export async function POST(event: RequestEvent) {
 	if (body.title == null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'title is required in body'
 			}
@@ -77,6 +81,10 @@ export async function POST(event: RequestEvent) {
 	if (session == null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'make sure authorization header  is present'
 			}
@@ -87,6 +95,10 @@ export async function POST(event: RequestEvent) {
 	if (user === null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'can not find user'
 			}
@@ -98,6 +110,10 @@ export async function POST(event: RequestEvent) {
 	if (taskListsWithSameTitle > 0) {
 		return {
 			status: 403,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: `A list with title ${body.title} already exists!`
 			}
@@ -118,6 +134,10 @@ export async function POST(event: RequestEvent) {
 	console.log(insertResult);
 	return {
 		status: 200,
+		headers: {
+			'access-control-allow-origin': '*'
+		},
+
 		body: taskList
 	};
 }

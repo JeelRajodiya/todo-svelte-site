@@ -9,6 +9,10 @@ export async function POST(event: RequestEvent) {
 	if (session == null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'make sure authorization header  is present'
 			}
@@ -19,6 +23,10 @@ export async function POST(event: RequestEvent) {
 	if (user === null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'Invalid session ID'
 			}
@@ -28,6 +36,10 @@ export async function POST(event: RequestEvent) {
 	const deletedCount = await db.tasks.deleteMany({ taskListID, userID, isCompleted: true });
 	return {
 		status: 200,
+		headers: {
+			'access-control-allow-origin': '*'
+		},
+
 		body: {
 			message: 'deleted ' + deletedCount.deletedCount + ' completed tasks'
 		}

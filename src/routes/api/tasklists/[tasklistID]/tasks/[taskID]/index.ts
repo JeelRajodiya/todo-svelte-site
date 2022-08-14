@@ -9,6 +9,10 @@ export async function DELETE(event: RequestEvent) {
 	if (session == null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'make sure authorization header  is present'
 			}
@@ -19,6 +23,10 @@ export async function DELETE(event: RequestEvent) {
 	if (user === null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'can not find user'
 			}
@@ -29,11 +37,18 @@ export async function DELETE(event: RequestEvent) {
 	if (tasklist.deletedCount === 0) {
 		return {
 			status: 500,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: { message: 'nothing deleted. something is wrong' }
 		};
 	}
 	return {
-		status: 200
+		status: 200,
+		headers: {
+			'access-control-allow-origin': '*'
+		}
 	};
 }
 
@@ -48,6 +63,10 @@ export async function PUT(event: RequestEvent) {
 	if (session == null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'make sure authorization header  is present'
 			}
@@ -58,6 +77,10 @@ export async function PUT(event: RequestEvent) {
 	if (user === null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'can not find user'
 			}
@@ -70,6 +93,10 @@ export async function PUT(event: RequestEvent) {
 	if (taskDoc === null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: { message: 'something went wrong ' }
 		};
 	}
@@ -93,6 +120,10 @@ export async function PUT(event: RequestEvent) {
 
 	return {
 		status: 200,
+		headers: {
+			'access-control-allow-origin': '*'
+		},
+
 		body: {
 			message: taskDoc
 		}
@@ -106,6 +137,10 @@ export async function PATCH(event: RequestEvent) {
 	if (session == null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'make sure authorization header  is present'
 			}
@@ -116,6 +151,10 @@ export async function PATCH(event: RequestEvent) {
 	if (user === null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'can not find user'
 			}
@@ -127,6 +166,10 @@ export async function PATCH(event: RequestEvent) {
 	if (taskDoc === null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: { message: 'something went wrong ' }
 		};
 	}
@@ -150,6 +193,10 @@ export async function PATCH(event: RequestEvent) {
 
 	return {
 		status: 200,
+		headers: {
+			'access-control-allow-origin': '*'
+		},
+
 		body: {
 			message: taskDoc
 		}

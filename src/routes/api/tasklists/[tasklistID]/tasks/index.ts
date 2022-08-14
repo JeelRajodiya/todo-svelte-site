@@ -33,6 +33,10 @@ export async function GET(event: RequestEvent) {
 	if (session == null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'make sure authorization header  is present'
 			}
@@ -43,6 +47,10 @@ export async function GET(event: RequestEvent) {
 	if (user === null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'Invalid session ID'
 			}
@@ -71,6 +79,10 @@ export async function GET(event: RequestEvent) {
 	};
 	return {
 		status: 200,
+		headers: {
+			'access-control-allow-origin': '*'
+		},
+
 		body: tasks
 	};
 }
@@ -82,6 +94,10 @@ export async function POST(event: RequestEvent) {
 	if (session == null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'make sure authorization header  is present'
 			}
@@ -92,6 +108,10 @@ export async function POST(event: RequestEvent) {
 	if (user === null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: {
 				message: 'Invalid session ID'
 			}
@@ -102,6 +122,10 @@ export async function POST(event: RequestEvent) {
 	if (body.title == undefined || body.position == undefined) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+
 			body: { message: 'body must have title, position property' }
 		};
 	}
@@ -127,6 +151,10 @@ export async function POST(event: RequestEvent) {
 	await db.tasks.insertOne(newTask);
 	return {
 		status: 200,
+		headers: {
+			'access-control-allow-origin': '*'
+		},
+
 		body: {
 			message: 'task created',
 			task: newTask

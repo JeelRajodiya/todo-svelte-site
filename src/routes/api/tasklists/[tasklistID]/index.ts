@@ -9,6 +9,10 @@ export async function GET(event: RequestEvent) {
 	if (session == null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+			
 			body: {
 				message: 'make sure authorization header  is present'
 			}
@@ -19,6 +23,10 @@ export async function GET(event: RequestEvent) {
 	if (user === null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+			
 			body: {
 				message: 'can not find user'
 			}
@@ -29,6 +37,10 @@ export async function GET(event: RequestEvent) {
 	if (tasklist === null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+			
 			body: {
 				message: 'wrong tasklistID'
 			}
@@ -37,6 +49,10 @@ export async function GET(event: RequestEvent) {
 
 	return {
 		status: 200,
+		headers: {
+			'access-control-allow-origin': '*'
+		},
+		
 
 		body: tasklist
 	};
@@ -49,6 +65,10 @@ export async function DELETE(event: RequestEvent) {
 	if (session == null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+			
 			body: {
 				message: 'make sure authorization header  is present'
 			}
@@ -59,6 +79,10 @@ export async function DELETE(event: RequestEvent) {
 	if (user === null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+			
 			body: {
 				message: 'Invalid session ID'
 			}
@@ -69,13 +93,21 @@ export async function DELETE(event: RequestEvent) {
 	if (deleteResult.deletedCount === 0) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+			
 			body: {
 				message: 'wrong tasklistID'
 			}
 		};
 	}
 	return {
-		status: 200
+		status: 200,
+		headers: {
+			'access-control-allow-origin': '*'
+		}
+		
 	};
 }
 
@@ -86,6 +118,10 @@ export async function PUT(event: RequestEvent) {
 	if (session == null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+			
 			body: {
 				message: 'make sure authorization header  is present'
 			}
@@ -96,6 +132,10 @@ export async function PUT(event: RequestEvent) {
 	if (user === null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+			
 			body: {
 				message: 'Invalid session ID'
 			}
@@ -106,6 +146,10 @@ export async function PUT(event: RequestEvent) {
 	if (taskListDoc === null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+			
 			body: {
 				message: 'wrong tasklistID'
 			}
@@ -128,6 +172,10 @@ export async function PUT(event: RequestEvent) {
 	if (taskListsWithSameTitle > 0) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+			
 			body: {
 				message: 'tasklist with same title already exists'
 			}
@@ -141,6 +189,10 @@ export async function PUT(event: RequestEvent) {
 	if (updateResult.modifiedCount === 0) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+			
 			body: {
 				message: 'nothing updated. something is wrong'
 			}
@@ -148,6 +200,10 @@ export async function PUT(event: RequestEvent) {
 	}
 	return {
 		status: 200,
+		headers: {
+			'access-control-allow-origin': '*'
+		},
+		
 		body: newTaskListDoc
 	};
 }
@@ -159,6 +215,10 @@ export async function PATCH(event: RequestEvent) {
 	if (session == null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+			
 			body: {
 				message: 'make sure authorization header  is present'
 			}
@@ -169,6 +229,10 @@ export async function PATCH(event: RequestEvent) {
 	if (user === null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+			
 			body: {
 				message: 'Invalid session ID'
 			}
@@ -179,6 +243,10 @@ export async function PATCH(event: RequestEvent) {
 	if (taskListDoc === null) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+			
 			body: {
 				message: 'wrong tasklistID'
 			}
@@ -199,6 +267,10 @@ export async function PATCH(event: RequestEvent) {
 	if (updateResult.modifiedCount === 0) {
 		return {
 			status: 400,
+			headers: {
+				'access-control-allow-origin': '*'
+			},
+			
 			body: {
 				message: 'nothing updated. something is wrong'
 			}
@@ -206,6 +278,10 @@ export async function PATCH(event: RequestEvent) {
 	}
 	return {
 		status: 200,
+		headers: {
+			'access-control-allow-origin': '*'
+		},
+		
 		body: newTaskListDoc
 	};
 }

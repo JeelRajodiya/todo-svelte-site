@@ -60,7 +60,7 @@ export async function POST(event: RequestEvent) {
 			'Access-Control-Allow-Headers': '*'
 		},
 		body: {
-			authorization: session,
+			Authorization: session,
 			message: 'Login successful'
 		}
 	};

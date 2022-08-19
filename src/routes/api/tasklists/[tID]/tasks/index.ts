@@ -27,7 +27,7 @@ export async function GET(event: RequestEvent) {
 		// 	? event.url.searchParams.get('updatedMin')
 		// 	: null
 	};
-	const taskListID: string = event.params.taskListID;
+	const taskListID: string = event.params.listID;
 
 	const session: string = event.request.headers.get('Authorization') as string;
 	if (session == null) {

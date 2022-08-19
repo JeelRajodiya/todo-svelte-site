@@ -2,7 +2,7 @@ import type { RequestEvent } from '@sveltejs/kit';
 import MongoDB from '$lib/database';
 import etag from 'etag';
 export async function DELETE(event: RequestEvent) {
-	const taskListID: string = event.params.taskListID;
+	const taskListID: string = event.params.listID;
 	const taskID: string = event.params.taskID;
 
 	const session: string = event.request.headers.get('Authorization') as string;
@@ -57,7 +57,7 @@ export async function DELETE(event: RequestEvent) {
 }
 
 export async function PUT(event: RequestEvent) {
-	const taskListID: string = event.params.taskListID;
+	const taskListID: string = event.params.listID;
 	const taskID: string = event.params.taskID;
 	const body = await event.request.json();
 	if (body.updatedOn == undefined) {
@@ -139,7 +139,7 @@ export async function PUT(event: RequestEvent) {
 }
 
 export async function PATCH(event: RequestEvent) {
-	const taskListID: string = event.params.taskListID;
+	const taskListID: string = event.params.listID;
 	const taskID: string = event.params.taskID;
 	const session: string = event.request.headers.get('Authorization') as string;
 	if (session == null) {

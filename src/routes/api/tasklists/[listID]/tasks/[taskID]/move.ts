@@ -3,7 +3,7 @@ import MongoDB from '$lib/database';
 // child support is abandon  but will be implemented in future
 
 export async function POST(event: RequestEvent) {
-	const taskListID: string = event.params.taskListID;
+	const taskListID: string = event.params.listID;
 	const taskID: string = event.params.taskID;
 
 	const session: string = event.request.headers.get('Authorization') as string;

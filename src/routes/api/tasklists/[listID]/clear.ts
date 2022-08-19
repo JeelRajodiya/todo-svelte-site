@@ -3,15 +3,15 @@ import MongoDB from '$lib/database';
 import etag from 'etag';
 
 export async function POST(event: RequestEvent) {
-	const taskListID: string = event.params.taskListID;
+	const taskListID: string = event.params.listID;
 
 	const session: string = event.request.headers.get('Authorization') as string;
 	if (session == null) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
 
 			body: {
@@ -25,8 +25,8 @@ export async function POST(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
 
 			body: {
@@ -39,7 +39,7 @@ export async function POST(event: RequestEvent) {
 	return {
 		status: 200,
 		headers: {
-				'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Origin': '*',
 			'Access-Control-Allow-Headers': '*'
 		},
 

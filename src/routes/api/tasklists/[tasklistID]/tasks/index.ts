@@ -34,8 +34,8 @@ export async function GET(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
 
 			body: {
@@ -49,8 +49,8 @@ export async function GET(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
 
 			body: {
@@ -82,7 +82,7 @@ export async function GET(event: RequestEvent) {
 	return {
 		status: 200,
 		headers: {
-				'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Origin': '*',
 			'Access-Control-Allow-Headers': '*'
 		},
 
@@ -92,14 +92,26 @@ export async function GET(event: RequestEvent) {
 
 export async function POST(event: RequestEvent) {
 	const taskListID: string = event.params.taskListID;
+	if (taskListID == null) {
+		return {
+			status: 400,
+			headers: {
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
+			},
 
+			body: {
+				message: 'make sure taskListID is present'
+			}
+		};
+	}
 	const session: string = event.request.headers.get('Authorization') as string;
 	if (session == null) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
 
 			body: {
@@ -113,8 +125,8 @@ export async function POST(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
 
 			body: {
@@ -128,8 +140,8 @@ export async function POST(event: RequestEvent) {
 		return {
 			status: 400,
 			headers: {
-					'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Headers': '*'
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Headers': '*'
 			},
 
 			body: { message: 'body must have title, position property' }
@@ -158,7 +170,7 @@ export async function POST(event: RequestEvent) {
 	return {
 		status: 200,
 		headers: {
-				'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Origin': '*',
 			'Access-Control-Allow-Headers': '*'
 		},
 

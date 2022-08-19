@@ -3,7 +3,7 @@ import type { TaskListDoc, UserDoc } from '$lib/util/types';
 import type { RequestEvent } from '@sveltejs/kit';
 import etag from 'etag';
 import { v4 as uuidv4 } from 'uuid';
-
+// GOOD
 export async function GET(event: RequestEvent) {
 	const maxResults = Number(event.url.searchParams.get('maxResults'));
 	const nextPageToken = Number(event.url.searchParams.get('nextPageToken'));

@@ -92,6 +92,7 @@ export async function GET(event: RequestEvent) {
 
 export async function POST(event: RequestEvent) {
 	const taskListID: string = event.params.taskListID;
+
 	if (taskListID == null) {
 		return {
 			status: 400,

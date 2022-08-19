@@ -91,7 +91,7 @@ export async function GET(event: RequestEvent) {
 }
 
 export async function POST(event: RequestEvent) {
-	const taskListID: string = event.params.tID;
+	const taskListID: string = event.params.listID;
 
 	if (taskListID == null) {
 		return {

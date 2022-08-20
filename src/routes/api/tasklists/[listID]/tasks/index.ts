@@ -72,7 +72,7 @@ export async function GET(event: RequestEvent) {
 		.skip(queryParams.maxResults * queryParams.nextPageToken)
 		.toArray();
 	for (const task of taskDocs) {
-		task['selfLink'] = `${event.url.origin}/tasks/${task.id}`;
+		task['selfLink'] = `${event.url.origin}/api/tasklists/${taskListID}/tasks/${task.id}`;
 	}
 	const tasks: Tasks = {
 		items: taskDocs,

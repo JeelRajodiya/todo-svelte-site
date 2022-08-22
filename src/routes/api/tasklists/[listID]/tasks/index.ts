@@ -137,7 +137,7 @@ export async function POST(event: RequestEvent) {
 	}
 	const userID = user.id;
 	const body = await event.request.json();
-	if (body.title == undefined) {
+	if (body.title === undefined) {
 		return {
 			status: 400,
 			headers: {

@@ -137,7 +137,7 @@ export async function POST(event: RequestEvent) {
 	}
 	const userID = user.id;
 	const body = await event.request.json();
-	if (body.title == undefined || body.position == undefined) {
+	if (body.title == undefined) {
 		return {
 			status: 400,
 			headers: {
@@ -145,10 +145,12 @@ export async function POST(event: RequestEvent) {
 				'Access-Control-Allow-Headers': '*'
 			},
 
-			body: { message: 'body must have title, position property' }
+			body: { message: 'body must have title property' }
 		};
 	}
-
+	if (body.position === undefined) {
+		body.position = (await db.tasks.count({ userID, taskListID })) + 1;
+	}
 	// avalible body arguments
 	// title,notes,due ,position,parent,updatedOn,links,parent
 	const newTask: TaskDoc = {

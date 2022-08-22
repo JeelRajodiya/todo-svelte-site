@@ -161,7 +161,7 @@ export async function POST(event: RequestEvent) {
 		hidden: false,
 		deleted: false,
 		isCompleted: false,
-		updatedOn: body.date ? body.date : new Date(),
+		updatedOn: body.time ? body.time : new Date(),
 		position: body.position,
 		links: body.links ? body.links : [],
 		parent: body.parent ? body.parent : null,

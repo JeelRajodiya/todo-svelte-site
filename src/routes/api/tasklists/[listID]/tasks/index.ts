@@ -145,7 +145,7 @@ export async function POST(event: RequestEvent) {
 				'Access-Control-Allow-Headers': '*'
 			},
 
-			body: { message: 'body must have title property' }
+			body: { message: `body must have title property. got:${body}` }
 		};
 	}
 	if (body.position === undefined) {

@@ -62,7 +62,7 @@ export async function GET(event: RequestEvent) {
 }
 
 export async function DELETE(event: RequestEvent) {
-	const tasklistID: string = event.params.listID;
+	const taskListID: string = event.params.listID;
 
 	const session: string = event.request.headers.get('Authorization') as string;
 	if (session == null) {
@@ -94,7 +94,8 @@ export async function DELETE(event: RequestEvent) {
 		};
 	}
 	const userID = user.id;
-	const deleteResult = await db.tasklists.deleteOne({ userID, id: tasklistID });
+	const deleteResult = await db.tasklists.deleteOne({ userID, id: taskListID });
+	await db.tasks.deleteMany({ userID, taskListID });
 	if (deleteResult.deletedCount === 0) {
 		return {
 			status: 400,
@@ -221,7 +222,7 @@ export async function PUT(event: RequestEvent) {
 }
 
 export async function PATCH(event: RequestEvent) {
-	const tasklistID: string = event.params.listID;
+	const taskListID: string = event.params.listID;
 
 	const session: string = event.request.headers.get('Authorization') as string;
 	if (session == null) {
@@ -253,7 +254,7 @@ export async function PATCH(event: RequestEvent) {
 		};
 	}
 	const userID = user.id;
-	const taskListDoc = await db.tasklists.findOne({ userID, id: tasklistID });
+	const taskListDoc = await db.tasklists.findOne({ userID, id: taskListID });
 	if (taskListDoc === null) {
 		return {
 			status: 400,
@@ -276,7 +277,7 @@ export async function PATCH(event: RequestEvent) {
 	};
 
 	const updateResult = await db.tasklists.updateOne(
-		{ userID, id: tasklistID },
+		{ userID, id: taskListID },
 		{ $set: newTaskListDoc }
 	);
 	if (updateResult.modifiedCount === 0) {
